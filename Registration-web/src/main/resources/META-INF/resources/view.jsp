@@ -1,5 +1,8 @@
-<%@ include file="/init.jsp" %>
+<%@ include file="/init.jsp"%>
 
-<p>
-	<b><liferay-ui:message key="registration.caption"/></b>
-</p>
+<c:if test="<%=themeDisplay.isSignedIn()%>">
+	<liferay-ui:message key="user-already-registered-x" arguments="<%= themeDisplay.getUser().getEmailAddress()%>"/>
+</c:if>
+<c:if test="<%=!themeDisplay.isSignedIn()%>">
+	<%@ include file="/components/registration_form.jspf"%>
+</c:if>
