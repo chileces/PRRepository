@@ -1,6 +1,6 @@
 package com.amf.web.registration.portlet.action;
 
-import com.amf.registration.service.exceptions.CustomRegistrationUserException;
+import com.amf.registration.exception.CustomRegistrationUserException;
 import com.amf.registration.service.validator.CustomRegistrationValidator;
 import com.amf.web.registration.constants.MVCCommandNames;
 import com.amf.web.registration.constants.RegistrationPortletKeys;
