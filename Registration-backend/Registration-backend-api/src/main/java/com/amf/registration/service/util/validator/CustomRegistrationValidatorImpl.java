@@ -2,7 +2,6 @@ package com.amf.registration.service.util.validator;
 
 import com.amf.registration.exception.CustomRegistrationUserException;
 import com.amf.registration.service.validator.CustomRegistrationValidator;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
 import com.liferay.portal.kernel.exception.AddressZipException;
@@ -19,8 +18,6 @@ import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,12 +29,7 @@ public class CustomRegistrationValidatorImpl implements CustomRegistrationValida
 	private final int MAX_16_CHARS = 16;
 	private final int MAX_10_CHARS = 10;
 	private final int MIN_4_CHARS = 4;
-
-	// Password policy: minimum 6 characters, must contain one uppercase, one
-	// number, one special character
-	// digit + lowercase char + uppercase char + punctuation + symbol
-	private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
-
+	
 	@Override
 	public void validateTermOfUse(Boolean termOfUse) throws TermsOfUseException {
 		if (termOfUse == null || !termOfUse) {
@@ -206,11 +198,7 @@ public class CustomRegistrationValidatorImpl implements CustomRegistrationValida
 	 * would far more complicated to achieve using standard regular expressions.
 	 */
 	private void _passwordValidates(String password) throws UserPasswordException {
-		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-		Matcher matcher = pattern.matcher(password);
-		if (matcher.matches()) {
 
-		}
 		if (6 <= password.length() && password.length() <= 32) {
 
 			if (!password.matches("^(?=.*[0-9]).{6,32}$")) {
