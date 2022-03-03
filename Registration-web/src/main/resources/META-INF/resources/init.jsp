@@ -58,7 +58,7 @@ page import="com.liferay.portal.kernel.exception.UserIdException" %><%@
 page import="com.liferay.portal.kernel.exception.UserLockoutException" %><%@
 page import="com.liferay.portal.kernel.exception.UserPasswordException" %><%@
 page import="com.liferay.portal.kernel.exception.UserReminderQueryException" %><%@
-page import="com.amf.registration.service.exception.CustomRegistrationUserException" %><%@
+page import="com.amf.registration.exception.CustomRegistrationUserException" %><%@
 page import="com.liferay.portal.kernel.exception.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.exception.RegionCodeException" %>
 <liferay-theme:defineObjects />
