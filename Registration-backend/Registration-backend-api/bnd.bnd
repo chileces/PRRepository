@@ -1,0 +1,10 @@
+Bundle-Name: Registration-backend-api
+Bundle-SymbolicName: com.amf.service.registration.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.amf.service.registration.exception,\
+	com.amf.service.registration.model,\
+	com.amf.service.registration.service,\
+	com.amf.service.registration.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../Registration-backend-service/service.xml
