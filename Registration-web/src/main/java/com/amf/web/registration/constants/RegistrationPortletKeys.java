@@ -6,6 +6,6 @@ package com.amf.web.registration.constants;
 public class RegistrationPortletKeys {
 
 	public static final String REGISTRATION =
-		"com_amf_web_registration_RegistrationPortlet";
+		"com_amf_web_registration_portlet_RegistrationPortlet";
 
 }
