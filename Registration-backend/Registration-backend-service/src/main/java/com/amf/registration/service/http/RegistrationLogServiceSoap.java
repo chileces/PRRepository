@@ -14,9 +14,16 @@
 
 package com.amf.registration.service.http;
 
+import com.amf.registration.service.RegistrationLogServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.amf.registration.service.RegistrationLogServiceUtil</code> service
+ * <code>RegistrationLogServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +63,85 @@ package com.amf.registration.service.http;
  */
 @Deprecated
 public class RegistrationLogServiceSoap {
+
+	public static com.amf.registration.model.RegistrationLogSoap
+			addRegistrationLog(
+				long groupId, long companyId, String userName,
+				java.util.Date createDate, java.util.Date modifiedDate,
+				String eventType, String ipAddress)
+		throws RemoteException {
+
+		try {
+			com.amf.registration.model.RegistrationLog returnValue =
+				RegistrationLogServiceUtil.addRegistrationLog(
+					groupId, companyId, userName, createDate, modifiedDate,
+					eventType, ipAddress);
+
+			return com.amf.registration.model.RegistrationLogSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.amf.registration.model.RegistrationLogSoap[] findAll()
+		throws RemoteException {
+
+		try {
+			java.util.List<com.amf.registration.model.RegistrationLog>
+				returnValue = RegistrationLogServiceUtil.findAll();
+
+			return com.amf.registration.model.RegistrationLogSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.amf.registration.model.RegistrationLogSoap[]
+			findByEventType(String eventType, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.amf.registration.model.RegistrationLog>
+				returnValue = RegistrationLogServiceUtil.findByEventType(
+					eventType, start, end);
+
+			return com.amf.registration.model.RegistrationLogSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static long getRegistrationLogCountByKeywords(
+			String fieldName, String value)
+		throws RemoteException {
+
+		try {
+			long returnValue =
+				RegistrationLogServiceUtil.getRegistrationLogCountByKeywords(
+					fieldName, value);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		RegistrationLogServiceSoap.class);
+
 }

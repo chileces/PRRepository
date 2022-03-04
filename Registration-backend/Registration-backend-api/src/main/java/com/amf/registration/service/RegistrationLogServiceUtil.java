@@ -14,6 +14,12 @@
 
 package com.amf.registration.service;
 
+import com.amf.registration.model.RegistrationLog;
+
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for RegistrationLog. This utility wraps
  * <code>com.amf.registration.service.impl.RegistrationLogServiceImpl</code> and is an
@@ -33,14 +39,40 @@ public class RegistrationLogServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.amf.registration.service.impl.RegistrationLogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static RegistrationLog addRegistrationLog(
+			long groupId, long companyId, String userName,
+			java.util.Date createDate, java.util.Date modifiedDate,
+			String eventType, String ipAddress)
+		throws PortalException {
+
+		return getService().addRegistrationLog(
+			groupId, companyId, userName, createDate, modifiedDate, eventType,
+			ipAddress);
+	}
+
+	public static List<RegistrationLog> findAll() {
+		return getService().findAll();
+	}
+
+	public static List<RegistrationLog> findByEventType(
+		String eventType, int start, int end) {
+
+		return getService().findByEventType(eventType, start, end);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static long getRegistrationLogCountByKeywords(
+		String fieldName, String value) {
+
+		return getService().getRegistrationLogCountByKeywords(fieldName, value);
 	}
 
 	public static RegistrationLogService getService() {

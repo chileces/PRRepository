@@ -32,6 +32,32 @@ public class RegistrationLogServiceWrapper
 		_registrationLogService = registrationLogService;
 	}
 
+	@Override
+	public com.amf.registration.model.RegistrationLog addRegistrationLog(
+			long groupId, long companyId, String userName,
+			java.util.Date createDate, java.util.Date modifiedDate,
+			String eventType, String ipAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _registrationLogService.addRegistrationLog(
+			groupId, companyId, userName, createDate, modifiedDate, eventType,
+			ipAddress);
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		findAll() {
+
+		return _registrationLogService.findAll();
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		findByEventType(String eventType, int start, int end) {
+
+		return _registrationLogService.findByEventType(eventType, start, end);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -40,6 +66,14 @@ public class RegistrationLogServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _registrationLogService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public long getRegistrationLogCountByKeywords(
+		String fieldName, String value) {
+
+		return _registrationLogService.getRegistrationLogCountByKeywords(
+			fieldName, value);
 	}
 
 	@Override

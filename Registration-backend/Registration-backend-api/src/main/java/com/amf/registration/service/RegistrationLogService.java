@@ -14,13 +14,19 @@
 
 package com.amf.registration.service;
 
+import com.amf.registration.model.RegistrationLog;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +53,15 @@ public interface RegistrationLogService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.amf.registration.service.impl.RegistrationLogServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the registration log remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RegistrationLogServiceUtil} if injection and service tracking are not available.
 	 */
+	public RegistrationLog addRegistrationLog(
+			long groupId, long companyId, String userName, Date createDate,
+			Date modifiedDate, String eventType, String ipAddress)
+		throws PortalException;
+
+	public List<RegistrationLog> findAll();
+
+	public List<RegistrationLog> findByEventType(
+		String eventType, int start, int end);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +69,9 @@ public interface RegistrationLogService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getRegistrationLogCountByKeywords(
+		String fieldName, String value);
 
 }

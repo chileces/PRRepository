@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -104,10 +105,10 @@ public class RegistrationLogModelImpl
 		"drop table Registration_RegistrationLog";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY registrationLog.registrationLogId ASC";
+		" ORDER BY registrationLog.createDate ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY Registration_RegistrationLog.registrationLogId ASC";
+		" ORDER BY Registration_RegistrationLog.createDate ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -116,11 +117,17 @@ public class RegistrationLogModelImpl
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long EVENTTYPE_COLUMN_BITMASK = 1L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long REGISTRATIONLOGID_COLUMN_BITMASK = 1L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -517,6 +524,15 @@ public class RegistrationLogModelImpl
 		_eventType = eventType;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalEventType() {
+		return getColumnOriginalValue("eventType");
+	}
+
 	@JSON
 	@Override
 	public String getIpAddress() {
@@ -610,17 +626,16 @@ public class RegistrationLogModelImpl
 
 	@Override
 	public int compareTo(RegistrationLog registrationLog) {
-		long primaryKey = registrationLog.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(
+			getCreateDate(), registrationLog.getCreateDate());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

@@ -121,6 +121,179 @@ public class RegistrationLogUtil {
 	}
 
 	/**
+	 * Returns all the registration logs where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @return the matching registration logs
+	 */
+	public static List<RegistrationLog> findByEventType(String eventType) {
+		return getPersistence().findByEventType(eventType);
+	}
+
+	/**
+	 * Returns a range of all the registration logs where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @return the range of matching registration logs
+	 */
+	public static List<RegistrationLog> findByEventType(
+		String eventType, int start, int end) {
+
+		return getPersistence().findByEventType(eventType, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the registration logs where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching registration logs
+	 */
+	public static List<RegistrationLog> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return getPersistence().findByEventType(
+			eventType, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the registration logs where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching registration logs
+	 */
+	public static List<RegistrationLog> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<RegistrationLog> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByEventType(
+			eventType, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching registration log
+	 * @throws NoSuchLogException if a matching registration log could not be found
+	 */
+	public static RegistrationLog findByEventType_First(
+			String eventType,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws com.amf.registration.exception.NoSuchLogException {
+
+		return getPersistence().findByEventType_First(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the first registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching registration log, or <code>null</code> if a matching registration log could not be found
+	 */
+	public static RegistrationLog fetchByEventType_First(
+		String eventType,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return getPersistence().fetchByEventType_First(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching registration log
+	 * @throws NoSuchLogException if a matching registration log could not be found
+	 */
+	public static RegistrationLog findByEventType_Last(
+			String eventType,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws com.amf.registration.exception.NoSuchLogException {
+
+		return getPersistence().findByEventType_Last(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching registration log, or <code>null</code> if a matching registration log could not be found
+	 */
+	public static RegistrationLog fetchByEventType_Last(
+		String eventType,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return getPersistence().fetchByEventType_Last(
+			eventType, orderByComparator);
+	}
+
+	/**
+	 * Returns the registration logs before and after the current registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param registrationLogId the primary key of the current registration log
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next registration log
+	 * @throws NoSuchLogException if a registration log with the primary key could not be found
+	 */
+	public static RegistrationLog[] findByEventType_PrevAndNext(
+			long registrationLogId, String eventType,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws com.amf.registration.exception.NoSuchLogException {
+
+		return getPersistence().findByEventType_PrevAndNext(
+			registrationLogId, eventType, orderByComparator);
+	}
+
+	/**
+	 * Removes all the registration logs where eventType = &#63; from the database.
+	 *
+	 * @param eventType the event type
+	 */
+	public static void removeByEventType(String eventType) {
+		getPersistence().removeByEventType(eventType);
+	}
+
+	/**
+	 * Returns the number of registration logs where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @return the number of matching registration logs
+	 */
+	public static int countByEventType(String eventType) {
+		return getPersistence().countByEventType(eventType);
+	}
+
+	/**
 	 * Caches the registration log in the entity cache if it is enabled.
 	 *
 	 * @param registrationLog the registration log
