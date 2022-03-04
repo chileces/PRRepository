@@ -1,0 +1,1 @@
+create index IX_81CEDBF9 on Registration_RegistrationLog (eventType[$COLUMN_LENGTH:75$]);

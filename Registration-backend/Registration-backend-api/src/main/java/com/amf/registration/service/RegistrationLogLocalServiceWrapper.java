@@ -33,6 +33,18 @@ public class RegistrationLogLocalServiceWrapper
 		_registrationLogLocalService = registrationLogLocalService;
 	}
 
+	@Override
+	public com.amf.registration.model.RegistrationLog addRegistrationLog(
+			long groupId, long companyId, String userName,
+			java.util.Date createDate, java.util.Date modifiedDate,
+			String eventType, String ipAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _registrationLogLocalService.addRegistrationLog(
+			groupId, companyId, userName, createDate, modifiedDate, eventType,
+			ipAddress);
+	}
+
 	/**
 	 * Adds the registration log to the database. Also notifies the appropriate model listeners.
 	 *
@@ -225,6 +237,13 @@ public class RegistrationLogLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		findAll() {
+
+		return _registrationLogLocalService.findAll();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -274,6 +293,14 @@ public class RegistrationLogLocalServiceWrapper
 
 		return _registrationLogLocalService.getRegistrationLog(
 			registrationLogId);
+	}
+
+	@Override
+	public long getRegistrationLogCountByKeywords(
+		String fieldName, String value) {
+
+		return _registrationLogLocalService.getRegistrationLogCountByKeywords(
+			fieldName, value);
 	}
 
 	/**

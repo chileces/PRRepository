@@ -44,6 +44,16 @@ public class RegistrationLogLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.amf.registration.service.impl.RegistrationLogLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static RegistrationLog addRegistrationLog(
+			long groupId, long companyId, String userName,
+			java.util.Date createDate, java.util.Date modifiedDate,
+			String eventType, String ipAddress)
+		throws PortalException {
+
+		return getService().addRegistrationLog(
+			groupId, companyId, userName, createDate, modifiedDate, eventType,
+			ipAddress);
+	}
 
 	/**
 	 * Adds the registration log to the database. Also notifies the appropriate model listeners.
@@ -207,6 +217,10 @@ public class RegistrationLogLocalServiceUtil {
 		return getService().fetchRegistrationLog(registrationLogId);
 	}
 
+	public static List<RegistrationLog> findAll() {
+		return getService().findAll();
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -249,6 +263,12 @@ public class RegistrationLogLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getRegistrationLog(registrationLogId);
+	}
+
+	public static long getRegistrationLogCountByKeywords(
+		String fieldName, String value) {
+
+		return getService().getRegistrationLogCountByKeywords(fieldName, value);
 	}
 
 	/**

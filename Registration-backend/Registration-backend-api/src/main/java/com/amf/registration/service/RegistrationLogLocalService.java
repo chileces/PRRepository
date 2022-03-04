@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -61,6 +62,10 @@ public interface RegistrationLogLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.amf.registration.service.impl.RegistrationLogLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the registration log local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RegistrationLogLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public RegistrationLog addRegistrationLog(
+			long groupId, long companyId, String userName, Date createDate,
+			Date modifiedDate, String eventType, String ipAddress)
+		throws PortalException;
 
 	/**
 	 * Adds the registration log to the database. Also notifies the appropriate model listeners.
@@ -195,6 +200,8 @@ public interface RegistrationLogLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RegistrationLog fetchRegistrationLog(long registrationLogId);
 
+	public List<RegistrationLog> findAll();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -226,6 +233,10 @@ public interface RegistrationLogLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RegistrationLog getRegistrationLog(long registrationLogId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getRegistrationLogCountByKeywords(
+		String fieldName, String value);
 
 	/**
 	 * Returns a range of all the registration logs.

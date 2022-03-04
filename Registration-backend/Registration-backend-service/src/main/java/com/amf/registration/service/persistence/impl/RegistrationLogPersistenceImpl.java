@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -55,6 +56,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -99,6 +101,549 @@ public class RegistrationLogPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByEventType;
+	private FinderPath _finderPathWithoutPaginationFindByEventType;
+	private FinderPath _finderPathCountByEventType;
+
+	/**
+	 * Returns all the registration logs where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @return the matching registration logs
+	 */
+	@Override
+	public List<RegistrationLog> findByEventType(String eventType) {
+		return findByEventType(
+			eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the registration logs where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @return the range of matching registration logs
+	 */
+	@Override
+	public List<RegistrationLog> findByEventType(
+		String eventType, int start, int end) {
+
+		return findByEventType(eventType, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the registration logs where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching registration logs
+	 */
+	@Override
+	public List<RegistrationLog> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return findByEventType(eventType, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the registration logs where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching registration logs
+	 */
+	@Override
+	public List<RegistrationLog> findByEventType(
+		String eventType, int start, int end,
+		OrderByComparator<RegistrationLog> orderByComparator,
+		boolean useFinderCache) {
+
+		eventType = Objects.toString(eventType, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByEventType;
+				finderArgs = new Object[] {eventType};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByEventType;
+			finderArgs = new Object[] {
+				eventType, start, end, orderByComparator
+			};
+		}
+
+		List<RegistrationLog> list = null;
+
+		if (useFinderCache) {
+			list = (List<RegistrationLog>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (RegistrationLog registrationLog : list) {
+					if (!eventType.equals(registrationLog.getEventType())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_REGISTRATIONLOG_WHERE);
+
+			boolean bindEventType = false;
+
+			if (eventType.isEmpty()) {
+				sb.append(_FINDER_COLUMN_EVENTTYPE_EVENTTYPE_3);
+			}
+			else {
+				bindEventType = true;
+
+				sb.append(_FINDER_COLUMN_EVENTTYPE_EVENTTYPE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(RegistrationLogModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEventType) {
+					queryPos.add(eventType);
+				}
+
+				list = (List<RegistrationLog>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching registration log
+	 * @throws NoSuchLogException if a matching registration log could not be found
+	 */
+	@Override
+	public RegistrationLog findByEventType_First(
+			String eventType,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws NoSuchLogException {
+
+		RegistrationLog registrationLog = fetchByEventType_First(
+			eventType, orderByComparator);
+
+		if (registrationLog != null) {
+			return registrationLog;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("eventType=");
+		sb.append(eventType);
+
+		sb.append("}");
+
+		throw new NoSuchLogException(sb.toString());
+	}
+
+	/**
+	 * Returns the first registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching registration log, or <code>null</code> if a matching registration log could not be found
+	 */
+	@Override
+	public RegistrationLog fetchByEventType_First(
+		String eventType,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		List<RegistrationLog> list = findByEventType(
+			eventType, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching registration log
+	 * @throws NoSuchLogException if a matching registration log could not be found
+	 */
+	@Override
+	public RegistrationLog findByEventType_Last(
+			String eventType,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws NoSuchLogException {
+
+		RegistrationLog registrationLog = fetchByEventType_Last(
+			eventType, orderByComparator);
+
+		if (registrationLog != null) {
+			return registrationLog;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("eventType=");
+		sb.append(eventType);
+
+		sb.append("}");
+
+		throw new NoSuchLogException(sb.toString());
+	}
+
+	/**
+	 * Returns the last registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching registration log, or <code>null</code> if a matching registration log could not be found
+	 */
+	@Override
+	public RegistrationLog fetchByEventType_Last(
+		String eventType,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		int count = countByEventType(eventType);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<RegistrationLog> list = findByEventType(
+			eventType, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the registration logs before and after the current registration log in the ordered set where eventType = &#63;.
+	 *
+	 * @param registrationLogId the primary key of the current registration log
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next registration log
+	 * @throws NoSuchLogException if a registration log with the primary key could not be found
+	 */
+	@Override
+	public RegistrationLog[] findByEventType_PrevAndNext(
+			long registrationLogId, String eventType,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws NoSuchLogException {
+
+		eventType = Objects.toString(eventType, "");
+
+		RegistrationLog registrationLog = findByPrimaryKey(registrationLogId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			RegistrationLog[] array = new RegistrationLogImpl[3];
+
+			array[0] = getByEventType_PrevAndNext(
+				session, registrationLog, eventType, orderByComparator, true);
+
+			array[1] = registrationLog;
+
+			array[2] = getByEventType_PrevAndNext(
+				session, registrationLog, eventType, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected RegistrationLog getByEventType_PrevAndNext(
+		Session session, RegistrationLog registrationLog, String eventType,
+		OrderByComparator<RegistrationLog> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_REGISTRATIONLOG_WHERE);
+
+		boolean bindEventType = false;
+
+		if (eventType.isEmpty()) {
+			sb.append(_FINDER_COLUMN_EVENTTYPE_EVENTTYPE_3);
+		}
+		else {
+			bindEventType = true;
+
+			sb.append(_FINDER_COLUMN_EVENTTYPE_EVENTTYPE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(RegistrationLogModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindEventType) {
+			queryPos.add(eventType);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						registrationLog)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<RegistrationLog> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the registration logs where eventType = &#63; from the database.
+	 *
+	 * @param eventType the event type
+	 */
+	@Override
+	public void removeByEventType(String eventType) {
+		for (RegistrationLog registrationLog :
+				findByEventType(
+					eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(registrationLog);
+		}
+	}
+
+	/**
+	 * Returns the number of registration logs where eventType = &#63;.
+	 *
+	 * @param eventType the event type
+	 * @return the number of matching registration logs
+	 */
+	@Override
+	public int countByEventType(String eventType) {
+		eventType = Objects.toString(eventType, "");
+
+		FinderPath finderPath = _finderPathCountByEventType;
+
+		Object[] finderArgs = new Object[] {eventType};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_REGISTRATIONLOG_WHERE);
+
+			boolean bindEventType = false;
+
+			if (eventType.isEmpty()) {
+				sb.append(_FINDER_COLUMN_EVENTTYPE_EVENTTYPE_3);
+			}
+			else {
+				bindEventType = true;
+
+				sb.append(_FINDER_COLUMN_EVENTTYPE_EVENTTYPE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEventType) {
+					queryPos.add(eventType);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EVENTTYPE_EVENTTYPE_2 =
+		"registrationLog.eventType = ?";
+
+	private static final String _FINDER_COLUMN_EVENTTYPE_EVENTTYPE_3 =
+		"(registrationLog.eventType IS NULL OR registrationLog.eventType = '')";
 
 	public RegistrationLogPersistenceImpl() {
 		setModelClass(RegistrationLog.class);
@@ -367,7 +912,7 @@ public class RegistrationLogPersistenceImpl
 		}
 
 		entityCache.putResult(
-			RegistrationLogImpl.class, registrationLog, false, true);
+			RegistrationLogImpl.class, registrationLogModelImpl, false, true);
 
 		if (isNew) {
 			registrationLog.setNew(false);
@@ -657,6 +1202,24 @@ public class RegistrationLogPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
+		_finderPathWithPaginationFindByEventType = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEventType",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"eventType"}, true);
+
+		_finderPathWithoutPaginationFindByEventType = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEventType",
+			new String[] {String.class.getName()}, new String[] {"eventType"},
+			true);
+
+		_finderPathCountByEventType = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEventType",
+			new String[] {String.class.getName()}, new String[] {"eventType"},
+			false);
+
 		_setRegistrationLogUtilPersistence(this);
 	}
 
@@ -728,13 +1291,22 @@ public class RegistrationLogPersistenceImpl
 	private static final String _SQL_SELECT_REGISTRATIONLOG =
 		"SELECT registrationLog FROM RegistrationLog registrationLog";
 
+	private static final String _SQL_SELECT_REGISTRATIONLOG_WHERE =
+		"SELECT registrationLog FROM RegistrationLog registrationLog WHERE ";
+
 	private static final String _SQL_COUNT_REGISTRATIONLOG =
 		"SELECT COUNT(registrationLog) FROM RegistrationLog registrationLog";
+
+	private static final String _SQL_COUNT_REGISTRATIONLOG_WHERE =
+		"SELECT COUNT(registrationLog) FROM RegistrationLog registrationLog WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "registrationLog.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No RegistrationLog exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No RegistrationLog exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RegistrationLogPersistenceImpl.class);
@@ -800,6 +1372,14 @@ public class RegistrationLogPersistenceImpl
 						registrationLogModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(RegistrationLogPersistenceImpl.
+						FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+							finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -837,6 +1417,17 @@ public class RegistrationLogPersistenceImpl
 
 		private static final Map<FinderPath, Long>
 			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= RegistrationLogModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 
