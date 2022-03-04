@@ -14,9 +14,14 @@
 
 package com.amf.registration.service.impl;
 
+import com.amf.registration.model.RegistrationLog;
 import com.amf.registration.service.base.RegistrationLogServiceBaseImpl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,4 +36,23 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class RegistrationLogServiceImpl extends RegistrationLogServiceBaseImpl {
+	
+	public RegistrationLog addRegistrationLog(long groupId, long companyId, String userName,
+			Date createDate, Date modifiedDate, String eventType, String ipAddress) throws PortalException{
+		
+		return registrationLogLocalService.addRegistrationLog(groupId, companyId, userName, createDate, modifiedDate, eventType, ipAddress);
+	}
+	
+	public List<RegistrationLog> findAll(){
+		return registrationLogLocalService.findAll();
+	}
+	
+	public List<RegistrationLog> findByEventType(String eventType, int start, int end){		
+		return registrationLogPersistence.findByEventType(eventType, start, end);
+	}
+	
+	public long getRegistrationLogCountByKeywords(String fieldName, String value) {
+		return registrationLogLocalService.getRegistrationLogCountByKeywords(fieldName, value);
+	}
+	
 }
