@@ -14,9 +14,18 @@
 
 package com.amf.registration.service.impl;
 
+import com.amf.registration.model.RegistrationLog;
 import com.amf.registration.service.base.RegistrationLogLocalServiceBaseImpl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,4 +38,33 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RegistrationLogLocalServiceImpl
 	extends RegistrationLogLocalServiceBaseImpl {
+	
+	public RegistrationLog addRegistrationLog(long groupId, long companyId, String userName,
+			Date createDate, Date modifiedDate, String eventType, String ipAddress) throws PortalException{
+		long logId = counterLocalService.increment(RegistrationLog.class.getName());
+		RegistrationLog registrationLog = createRegistrationLog(logId);
+		
+		registrationLog.setGroupId(groupId);
+		registrationLog.setCompanyId(companyId);
+		registrationLog.setUserName(userName);
+		registrationLog.setCreateDate(createDate);
+		registrationLog.setModifiedDate(modifiedDate);
+		registrationLog.setIpAddress(ipAddress);
+		registrationLog.setEventType(eventType);
+
+		super.addRegistrationLog(registrationLog);
+		return registrationLog;
+	}
+	
+	public List<RegistrationLog> findAll(){
+		return registrationLogPersistence.findAll();
+	}
+	public long getRegistrationLogCountByKeywords(String fieldName, String value) {
+		return registrationLogLocalService.dynamicQueryCount(_getKeywordSearchDynamicQuery(fieldName, value));
+	}
+
+	private DynamicQuery _getKeywordSearchDynamicQuery(String fieldName, String value) {
+		DynamicQuery dynamicQuery = dynamicQuery().add(RestrictionsFactoryUtil.eq(fieldName, value));		
+		return dynamicQuery;
+	}
 }
