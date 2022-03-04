@@ -26,7 +26,6 @@ public class UserRegistrationListener extends BaseModelListener<User>{
 			String screenNameFormat = user.getScreenName() + "(" + userId + ")";
 			
 			RegistrationLogLocalServiceUtil.addRegistrationLog(user.getGroupId(), user.getCompanyId(), screenNameFormat, now, now, REGISTRATION, DEFAULT_REGISTRATION_USER_IP);
-			System.out.println("Registered user logged: " + user.getScreenName());
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}		
