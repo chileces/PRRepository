@@ -61,6 +61,8 @@ page import="com.liferay.portal.kernel.exception.UserReminderQueryException" %><
 page import="com.amf.registration.exception.CustomRegistrationUserException" %><%@
 page import="com.liferay.portal.kernel.exception.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.exception.RegionCodeException" %>
+<%@
+page import="com.amf.registration.model.RegistrationLog" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
