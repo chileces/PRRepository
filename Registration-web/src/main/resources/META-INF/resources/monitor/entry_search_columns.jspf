@@ -1,4 +1,6 @@
-
+<%
+SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:MM:SS");
+%>
 <liferay-ui:search-container emptyResultsMessage="no-user-activity-logs"
 	id="registrationLogEntries2" total="${registrationLogCount}">
 	<liferay-ui:search-container-results results="${registrationLogs}" />
@@ -7,8 +9,11 @@
 	<liferay-ui:search-container-row
 		className="com.amf.registration.model.RegistrationLog"
 		keyProperty="registrationLogId" modelVar="entry">
-		<liferay-ui:search-container-column-text property="createDate"
-			name="Create Date" />
+		
+		
+ 		<liferay-ui:search-container-column-text 
+			name="Create Date" value="<%= sdf.format(entry.getCreateDate()) %>"> 
+		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text property="userName"
 			name="Display Name" />
 		<liferay-ui:search-container-column-text property="ipAddress"
@@ -18,4 +23,5 @@
 	</liferay-ui:search-container-row>
 	<%-- Iterator / Paging --%>
 	<liferay-ui:search-iterator markupView="lexicon" />
+
 </liferay-ui:search-container>
