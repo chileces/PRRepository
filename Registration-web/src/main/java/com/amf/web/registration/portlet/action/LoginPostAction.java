@@ -28,7 +28,7 @@ public class LoginPostAction implements LifecycleAction {
 			String clientIpAddress =request.getRemoteAddr();
 			long companyId = PortalUtil.getCompanyId(request);
 
-			RegistrationLogLocalServiceUtil.addRegistrationLog(groupId, companyId, userName, 
+			RegistrationLogLocalServiceUtil.addRegistrationLog(groupId, companyId, userId, userName, 
 					new Date(), new Date(),"Login",clientIpAddress);
 
 		} catch (PortalException e) {
