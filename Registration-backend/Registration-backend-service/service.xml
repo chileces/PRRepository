@@ -29,5 +29,8 @@
         <finder name="EventType" return-type="Collection">
             <finder-column name="eventType"></finder-column>
         </finder>
+         <finder name="UserId" return-type="Collection">
+            <finder-column name="userId"></finder-column>
+        </finder>
 	</entity>
 </service-builder>

@@ -34,28 +34,14 @@ public class RegistrationLogServiceWrapper
 
 	@Override
 	public com.amf.registration.model.RegistrationLog addRegistrationLog(
-			long groupId, long companyId, String userName,
+			long groupId, long companyId, long userId, String userName,
 			java.util.Date createDate, java.util.Date modifiedDate,
 			String eventType, String ipAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _registrationLogService.addRegistrationLog(
-			groupId, companyId, userName, createDate, modifiedDate, eventType,
-			ipAddress);
-	}
-
-	@Override
-	public java.util.List<com.amf.registration.model.RegistrationLog>
-		findAll() {
-
-		return _registrationLogService.findAll();
-	}
-
-	@Override
-	public java.util.List<com.amf.registration.model.RegistrationLog>
-		findByEventType(String eventType, int start, int end) {
-
-		return _registrationLogService.findByEventType(eventType, start, end);
+			groupId, companyId, userId, userName, createDate, modifiedDate,
+			eventType, ipAddress);
 	}
 
 	/**
@@ -69,11 +55,59 @@ public class RegistrationLogServiceWrapper
 	}
 
 	@Override
-	public long getRegistrationLogCountByKeywords(
-		String fieldName, String value) {
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogs(int start, int end) {
 
-		return _registrationLogService.getRegistrationLogCountByKeywords(
-			fieldName, value);
+		return _registrationLogService.getRegistrationLogs(start, end);
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByEventType(String eventType, int start, int end) {
+
+		return _registrationLogService.getRegistrationLogsByEventType(
+			eventType, start, end);
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByUser(long userId, int start, int end) {
+
+		return _registrationLogService.getRegistrationLogsByUser(
+			userId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByUserEventType(
+			long userId, String eventType, int start, int end) {
+
+		return _registrationLogService.getRegistrationLogsByUserEventType(
+			userId, eventType, start, end);
+	}
+
+	@Override
+	public int getRegistrationLogsCount() {
+		return _registrationLogService.getRegistrationLogsCount();
+	}
+
+	@Override
+	public long getRegistrationLogsCountByEventType(String eventType) {
+		return _registrationLogService.getRegistrationLogsCountByEventType(
+			eventType);
+	}
+
+	@Override
+	public long getRegistrationLogsCountByUser(long userId) {
+		return _registrationLogService.getRegistrationLogsCountByUser(userId);
+	}
+
+	@Override
+	public long getRegistrationLogsCountByUserEventType(
+		long userId, String eventType) {
+
+		return _registrationLogService.getRegistrationLogsCountByUserEventType(
+			userId, eventType);
 	}
 
 	@Override

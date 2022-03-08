@@ -14,45 +14,89 @@
 
 package com.amf.registration.service.impl;
 
+import com.amf.registration.constants.RegistrationConstants;
 import com.amf.registration.model.RegistrationLog;
 import com.amf.registration.service.base.RegistrationLogServiceBaseImpl;
-
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = {
-		"json.web.service.context.name=registration",
-		"json.web.service.context.path=RegistrationLog"
-	},
-	service = AopService.class
-)
+@Component(property = { "json.web.service.context.name=registration",
+		"json.web.service.context.path=RegistrationLog" }, service = AopService.class)
 public class RegistrationLogServiceImpl extends RegistrationLogServiceBaseImpl {
-	
-	public RegistrationLog addRegistrationLog(long groupId, long companyId, String userName,
-			Date createDate, Date modifiedDate, String eventType, String ipAddress) throws PortalException{
+
+	public RegistrationLog addRegistrationLog(long groupId, long companyId, long userId, String userName, Date createDate,
+			Date modifiedDate, String eventType, String ipAddress) throws PortalException {
+
+		return registrationLogLocalService.addRegistrationLog(groupId, companyId, userId, userName, createDate, modifiedDate,
+				eventType, ipAddress);
+	}
+
+	public List<RegistrationLog> getRegistrationLogs(int start, int end) {
 		
-		return registrationLogLocalService.addRegistrationLog(groupId, companyId, userName, createDate, modifiedDate, eventType, ipAddress);
+		return registrationLogLocalService.getRegistrationLogs(start, end);
+	}
+
+	// get all by User name
+	public List<RegistrationLog> getRegistrationLogsByUser(long userId, int start, int end) {
+
+		return registrationLogLocalService.getRegistrationLogsByUser(userId, start, end);
+	}
+
+	// filter by eventtype
+	public List<RegistrationLog> getRegistrationLogsByEventType(String eventType, int start, int end) {
+
+		return registrationLogLocalService.getRegistrationLogsByEventType(eventType, start, end);
+	}
+
+	// filter by eventtype & username
+	public List<RegistrationLog> getRegistrationLogsByUserEventType(long userId, String eventType, int start,
+			int end) {
+
+		return registrationLogLocalService.getRegistrationLogsByUserEventType(userId, eventType, start, end);
+	}
+
+	//count all by event type
+	public long getRegistrationLogsCountByEventType(String eventType) {
+
+		return registrationLogLocalService.getRegistrationLogsCountByEventType(eventType);
+	}
+
+	// count & filter by eventtype & username
+	public long getRegistrationLogsCountByUserEventType(long userId, String eventType) {
+		return registrationLogLocalService.getRegistrationLogsCountByUserEventType(userId, eventType);
+	}
+
+	// count all records
+	public int getRegistrationLogsCount() {
+		return registrationLogLocalService.getRegistrationLogsCount();
+	}
+
+	//count all by username
+	public long getRegistrationLogsCountByUser(long userId) {
+		return registrationLogLocalService.getRegistrationLogsCountByUser(userId);
 	}
 	
-	public List<RegistrationLog> findAll(){
-		return registrationLogLocalService.findAll();
-	}
 	
-	public List<RegistrationLog> findByEventType(String eventType, int start, int end){		
-		return registrationLogPersistence.findByEventType(eventType, start, end);
-	}
+	@Reference(policy=ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY,
+			target="(model.class.name=" + RegistrationConstants.RESOURCE_MODEL+ ")")
+	private volatile ModelResourcePermission<RegistrationLog> _assignmentModelResourcePermission;
 	
-	public long getRegistrationLogCountByKeywords(String fieldName, String value) {
-		return registrationLogLocalService.getRegistrationLogCountByKeywords(fieldName, value);
-	}
 	
+	@Reference(policy = ReferencePolicy.DYNAMIC,
+			 policyOption = ReferencePolicyOption.GREEDY,
+			 target = "(resource.name=" + RegistrationConstants.RESOURCE_NAME + ")")
+	private volatile PortletResourcePermission _portletResourcePermission;
 }
