@@ -13,9 +13,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -27,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author liferay
  */
-@Component(immediate = true,
-property = { "javax.portlet.name=" + RegistrationPortletKeys.ADMIN_MONITOR, "mvc.command.name=/",
+@Component(immediate = true, property = { "javax.portlet.name=" + RegistrationPortletKeys.ADMIN_MONITOR,
+		"mvc.command.name=/",
 		"mvc.command.name=" + MVCCommandNames.VIEW_USER_ACTIVITIES }, service = MVCRenderCommand.class)
 public class ViewUserActivitiesMVCRenderCommand implements MVCRenderCommand {
 	@Override
@@ -37,9 +41,8 @@ public class ViewUserActivitiesMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			String eventFilter = ParamUtil.getString(renderRequest, "eventFilter", StringPool.BLANK);
-			findAllUserActivities(renderRequest, eventFilter);
+			findAllUserActivities(renderRequest, renderResponse, eventFilter);
 		}
-		
 		return "/monitor/view.jsp";
 	}
 
@@ -48,7 +51,7 @@ public class ViewUserActivitiesMVCRenderCommand implements MVCRenderCommand {
 	 *
 	 * @param renderRequest
 	 */
-	private void findAllUserActivities(RenderRequest renderRequest, String eventType) {
+	private void findAllUserActivities(RenderRequest renderRequest, RenderResponse renderResponse, String eventType) {
 		// Resolve start and end for the search.
 		int currentPage = ParamUtil.getInteger(renderRequest, SearchContainer.DEFAULT_CUR_PARAM,
 				SearchContainer.DEFAULT_CUR);
@@ -59,48 +62,63 @@ public class ViewUserActivitiesMVCRenderCommand implements MVCRenderCommand {
 
 		// Call the service to get the list of assignments.
 		List<RegistrationLog> registrationLogs = new ArrayList<RegistrationLog>();
-		
+
 		long count = 10;
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		
+
 		long userId = themeDisplay.getUserId();
-		
-		//check permission VIEW ALL LOGS?
+
+		// check permission VIEW ALL LOGS?
 		if (hasPermission(themeDisplay)) {
-			//show all user activities logs
-			if (eventType == null || eventType.isEmpty() || eventType.equals("All")) {				
+			// show all user activities logs
+			if (eventType == null || eventType.isEmpty() || eventType.equals("All")) {
 				registrationLogs = _registrationLogService.getRegistrationLogs(start, end);
-				
+
 				count = _registrationLogService.getRegistrationLogsCount();
-			}else {
+			} else {
 				registrationLogs = _registrationLogService.getRegistrationLogsByEventType(eventType, start, end);
-				
+
 				count = _registrationLogService.getRegistrationLogsCountByEventType(eventType);
 			}
-		}else {
-			//show only user's related sactivities logs
+		} else {
+			// show only user's related sactivities logs
 			if (eventType == null || eventType.isEmpty() || eventType.equals("All")) {
 				registrationLogs = _registrationLogService.getRegistrationLogsByUser(userId, start, end);
-				
+
 				count = _registrationLogService.getRegistrationLogsCountByUser(userId);
-			}else {
-				registrationLogs = _registrationLogService.getRegistrationLogsByUserEventType(userId, eventType, start, end);
-				
+			} else {
+				registrationLogs = _registrationLogService.getRegistrationLogsByUserEventType(userId, eventType, start,
+						end);
+
 				count = _registrationLogService.getRegistrationLogsCountByUserEventType(userId, eventType);
 			}
 		}
-		
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("eventFilter", eventType);
+
+		/*
+		 * Creating IteratorURL and in that we will pass tab parameter
+		 */
+		PortletURL iteratorURL = renderResponse.createRenderURL();
+		Iterator<Map.Entry<String, String>> entries = paramMap.entrySet().iterator();
+		while (entries.hasNext()) {
+			Map.Entry<String, String> entry = entries.next();
+			iteratorURL.setParameter(entry.getKey(), entry.getValue());
+		}
+
 		// Set request attributes.
+		renderRequest.setAttribute("iteratorURL", iteratorURL);
 		renderRequest.setAttribute("registrationLogs", registrationLogs);
 		renderRequest.setAttribute("registrationLogCount", count);
-		
+
 	}
 
 	private boolean hasPermission(ThemeDisplay themeDisplay) {
 		return RegistrationLogToplevelPermission.contains(themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), "VIEW_ALL_LOGS");		
+				themeDisplay.getScopeGroupId(), "VIEW_ALL_LOGS");
 	}
-	
-	@Reference protected RegistrationLogService _registrationLogService;
+
+	@Reference
+	protected RegistrationLogService _registrationLogService;
 
 }
