@@ -25,7 +25,7 @@ public class UserRegistrationListener extends BaseModelListener<User>{
 			Date now = new Date();
 			String screenNameFormat = user.getScreenName() + "(" + userId + ")";
 			
-			RegistrationLogLocalServiceUtil.addRegistrationLog(user.getGroupId(), user.getCompanyId(), screenNameFormat, now, now, REGISTRATION, DEFAULT_REGISTRATION_USER_IP);
+			RegistrationLogLocalServiceUtil.addRegistrationLog(user.getGroupId(), user.getCompanyId(), userId, screenNameFormat, now, now, REGISTRATION, DEFAULT_REGISTRATION_USER_IP);
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}		
