@@ -294,6 +294,171 @@ public class RegistrationLogUtil {
 	}
 
 	/**
+	 * Returns all the registration logs where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching registration logs
+	 */
+	public static List<RegistrationLog> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the registration logs where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @return the range of matching registration logs
+	 */
+	public static List<RegistrationLog> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the registration logs where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching registration logs
+	 */
+	public static List<RegistrationLog> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the registration logs where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RegistrationLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of registration logs
+	 * @param end the upper bound of the range of registration logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching registration logs
+	 */
+	public static List<RegistrationLog> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<RegistrationLog> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first registration log in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching registration log
+	 * @throws NoSuchLogException if a matching registration log could not be found
+	 */
+	public static RegistrationLog findByUserId_First(
+			long userId, OrderByComparator<RegistrationLog> orderByComparator)
+		throws com.amf.registration.exception.NoSuchLogException {
+
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first registration log in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching registration log, or <code>null</code> if a matching registration log could not be found
+	 */
+	public static RegistrationLog fetchByUserId_First(
+		long userId, OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last registration log in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching registration log
+	 * @throws NoSuchLogException if a matching registration log could not be found
+	 */
+	public static RegistrationLog findByUserId_Last(
+			long userId, OrderByComparator<RegistrationLog> orderByComparator)
+		throws com.amf.registration.exception.NoSuchLogException {
+
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last registration log in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching registration log, or <code>null</code> if a matching registration log could not be found
+	 */
+	public static RegistrationLog fetchByUserId_Last(
+		long userId, OrderByComparator<RegistrationLog> orderByComparator) {
+
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the registration logs before and after the current registration log in the ordered set where userId = &#63;.
+	 *
+	 * @param registrationLogId the primary key of the current registration log
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next registration log
+	 * @throws NoSuchLogException if a registration log with the primary key could not be found
+	 */
+	public static RegistrationLog[] findByUserId_PrevAndNext(
+			long registrationLogId, long userId,
+			OrderByComparator<RegistrationLog> orderByComparator)
+		throws com.amf.registration.exception.NoSuchLogException {
+
+		return getPersistence().findByUserId_PrevAndNext(
+			registrationLogId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the registration logs where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	 * Returns the number of registration logs where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching registration logs
+	 */
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	 * Caches the registration log in the entity cache if it is enabled.
 	 *
 	 * @param registrationLog the registration log

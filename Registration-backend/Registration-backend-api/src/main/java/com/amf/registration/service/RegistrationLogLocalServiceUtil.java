@@ -45,14 +45,14 @@ public class RegistrationLogLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.amf.registration.service.impl.RegistrationLogLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static RegistrationLog addRegistrationLog(
-			long groupId, long companyId, String userName,
+			long groupId, long companyId, long userId, String userName,
 			java.util.Date createDate, java.util.Date modifiedDate,
 			String eventType, String ipAddress)
 		throws PortalException {
 
 		return getService().addRegistrationLog(
-			groupId, companyId, userName, createDate, modifiedDate, eventType,
-			ipAddress);
+			groupId, companyId, userId, userName, createDate, modifiedDate,
+			eventType, ipAddress);
 	}
 
 	/**
@@ -217,10 +217,6 @@ public class RegistrationLogLocalServiceUtil {
 		return getService().fetchRegistrationLog(registrationLogId);
 	}
 
-	public static List<RegistrationLog> findAll() {
-		return getService().findAll();
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -265,12 +261,6 @@ public class RegistrationLogLocalServiceUtil {
 		return getService().getRegistrationLog(registrationLogId);
 	}
 
-	public static long getRegistrationLogCountByKeywords(
-		String fieldName, String value) {
-
-		return getService().getRegistrationLogCountByKeywords(fieldName, value);
-	}
-
 	/**
 	 * Returns a range of all the registration logs.
 	 *
@@ -288,6 +278,26 @@ public class RegistrationLogLocalServiceUtil {
 		return getService().getRegistrationLogs(start, end);
 	}
 
+	public static List<RegistrationLog> getRegistrationLogsByEventType(
+		String eventType, int start, int end) {
+
+		return getService().getRegistrationLogsByEventType(
+			eventType, start, end);
+	}
+
+	public static List<RegistrationLog> getRegistrationLogsByUser(
+		long userId, int start, int end) {
+
+		return getService().getRegistrationLogsByUser(userId, start, end);
+	}
+
+	public static List<RegistrationLog> getRegistrationLogsByUserEventType(
+		long userId, String eventType, int start, int end) {
+
+		return getService().getRegistrationLogsByUserEventType(
+			userId, eventType, start, end);
+	}
+
 	/**
 	 * Returns the number of registration logs.
 	 *
@@ -295,6 +305,21 @@ public class RegistrationLogLocalServiceUtil {
 	 */
 	public static int getRegistrationLogsCount() {
 		return getService().getRegistrationLogsCount();
+	}
+
+	public static long getRegistrationLogsCountByEventType(String eventType) {
+		return getService().getRegistrationLogsCountByEventType(eventType);
+	}
+
+	public static long getRegistrationLogsCountByUser(long userId) {
+		return getService().getRegistrationLogsCountByUser(userId);
+	}
+
+	public static long getRegistrationLogsCountByUserEventType(
+		long userId, String eventType) {
+
+		return getService().getRegistrationLogsCountByUserEventType(
+			userId, eventType);
 	}
 
 	/**

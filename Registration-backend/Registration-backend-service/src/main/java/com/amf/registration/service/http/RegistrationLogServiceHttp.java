@@ -54,7 +54,7 @@ public class RegistrationLogServiceHttp {
 
 	public static com.amf.registration.model.RegistrationLog addRegistrationLog(
 			HttpPrincipal httpPrincipal, long groupId, long companyId,
-			String userName, java.util.Date createDate,
+			long userId, String userName, java.util.Date createDate,
 			java.util.Date modifiedDate, String eventType, String ipAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -64,7 +64,7 @@ public class RegistrationLogServiceHttp {
 				_addRegistrationLogParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, companyId, userName, createDate,
+				methodKey, groupId, companyId, userId, userName, createDate,
 				modifiedDate, eventType, ipAddress);
 
 			Object returnObj = null;
@@ -96,14 +96,15 @@ public class RegistrationLogServiceHttp {
 	}
 
 	public static java.util.List<com.amf.registration.model.RegistrationLog>
-		findAll(HttpPrincipal httpPrincipal) {
+		getRegistrationLogs(HttpPrincipal httpPrincipal, int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RegistrationLogServiceUtil.class, "findAll",
-				_findAllParameterTypes1);
+				RegistrationLogServiceUtil.class, "getRegistrationLogs",
+				_getRegistrationLogsParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey);
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, start, end);
 
 			Object returnObj = null;
 
@@ -128,13 +129,48 @@ public class RegistrationLogServiceHttp {
 	}
 
 	public static java.util.List<com.amf.registration.model.RegistrationLog>
-		findByEventType(
+		getRegistrationLogsByUser(
+			HttpPrincipal httpPrincipal, long userId, int start, int end) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RegistrationLogServiceUtil.class, "getRegistrationLogsByUser",
+				_getRegistrationLogsByUserParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.amf.registration.model.RegistrationLog>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByEventType(
 			HttpPrincipal httpPrincipal, String eventType, int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RegistrationLogServiceUtil.class, "findByEventType",
-				_findByEventTypeParameterTypes2);
+				RegistrationLogServiceUtil.class,
+				"getRegistrationLogsByEventType",
+				_getRegistrationLogsByEventTypeParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, eventType, start, end);
@@ -161,17 +197,147 @@ public class RegistrationLogServiceHttp {
 		}
 	}
 
-	public static long getRegistrationLogCountByKeywords(
-		HttpPrincipal httpPrincipal, String fieldName, String value) {
+	public static java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByUserEventType(
+			HttpPrincipal httpPrincipal, long userId, String eventType,
+			int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				RegistrationLogServiceUtil.class,
-				"getRegistrationLogCountByKeywords",
-				_getRegistrationLogCountByKeywordsParameterTypes3);
+				"getRegistrationLogsByUserEventType",
+				_getRegistrationLogsByUserEventTypeParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fieldName, value);
+				methodKey, userId, eventType, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.amf.registration.model.RegistrationLog>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static long getRegistrationLogsCountByEventType(
+		HttpPrincipal httpPrincipal, String eventType) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RegistrationLogServiceUtil.class,
+				"getRegistrationLogsCountByEventType",
+				_getRegistrationLogsCountByEventTypeParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, eventType);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Long)returnObj).longValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static long getRegistrationLogsCountByUserEventType(
+		HttpPrincipal httpPrincipal, long userId, String eventType) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RegistrationLogServiceUtil.class,
+				"getRegistrationLogsCountByUserEventType",
+				_getRegistrationLogsCountByUserEventTypeParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, eventType);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Long)returnObj).longValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getRegistrationLogsCount(HttpPrincipal httpPrincipal) {
+		try {
+			MethodKey methodKey = new MethodKey(
+				RegistrationLogServiceUtil.class, "getRegistrationLogsCount",
+				_getRegistrationLogsCountParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static long getRegistrationLogsCountByUser(
+		HttpPrincipal httpPrincipal, long userId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RegistrationLogServiceUtil.class,
+				"getRegistrationLogsCountByUser",
+				_getRegistrationLogsCountByUserParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
 
 			Object returnObj = null;
 
@@ -199,15 +365,35 @@ public class RegistrationLogServiceHttp {
 
 	private static final Class<?>[] _addRegistrationLogParameterTypes0 =
 		new Class[] {
-			long.class, long.class, String.class, java.util.Date.class,
-			java.util.Date.class, String.class, String.class
+			long.class, long.class, long.class, String.class,
+			java.util.Date.class, java.util.Date.class, String.class,
+			String.class
 		};
-	private static final Class<?>[] _findAllParameterTypes1 = new Class[] {};
-	private static final Class<?>[] _findByEventTypeParameterTypes2 =
-		new Class[] {String.class, int.class, int.class};
+	private static final Class<?>[] _getRegistrationLogsParameterTypes1 =
+		new Class[] {int.class, int.class};
+	private static final Class<?>[] _getRegistrationLogsByUserParameterTypes2 =
+		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[]
-		_getRegistrationLogCountByKeywordsParameterTypes3 = new Class[] {
-			String.class, String.class
+		_getRegistrationLogsByEventTypeParameterTypes3 = new Class[] {
+			String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getRegistrationLogsByUserEventTypeParameterTypes4 = new Class[] {
+			long.class, String.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getRegistrationLogsCountByEventTypeParameterTypes5 = new Class[] {
+			String.class
+		};
+	private static final Class<?>[]
+		_getRegistrationLogsCountByUserEventTypeParameterTypes6 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _getRegistrationLogsCountParameterTypes7 =
+		new Class[] {};
+	private static final Class<?>[]
+		_getRegistrationLogsCountByUserParameterTypes8 = new Class[] {
+			long.class
 		};
 
 }

@@ -40,24 +40,14 @@ public class RegistrationLogServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.amf.registration.service.impl.RegistrationLogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static RegistrationLog addRegistrationLog(
-			long groupId, long companyId, String userName,
+			long groupId, long companyId, long userId, String userName,
 			java.util.Date createDate, java.util.Date modifiedDate,
 			String eventType, String ipAddress)
 		throws PortalException {
 
 		return getService().addRegistrationLog(
-			groupId, companyId, userName, createDate, modifiedDate, eventType,
-			ipAddress);
-	}
-
-	public static List<RegistrationLog> findAll() {
-		return getService().findAll();
-	}
-
-	public static List<RegistrationLog> findByEventType(
-		String eventType, int start, int end) {
-
-		return getService().findByEventType(eventType, start, end);
+			groupId, companyId, userId, userName, createDate, modifiedDate,
+			eventType, ipAddress);
 	}
 
 	/**
@@ -69,10 +59,49 @@ public class RegistrationLogServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static long getRegistrationLogCountByKeywords(
-		String fieldName, String value) {
+	public static List<RegistrationLog> getRegistrationLogs(
+		int start, int end) {
 
-		return getService().getRegistrationLogCountByKeywords(fieldName, value);
+		return getService().getRegistrationLogs(start, end);
+	}
+
+	public static List<RegistrationLog> getRegistrationLogsByEventType(
+		String eventType, int start, int end) {
+
+		return getService().getRegistrationLogsByEventType(
+			eventType, start, end);
+	}
+
+	public static List<RegistrationLog> getRegistrationLogsByUser(
+		long userId, int start, int end) {
+
+		return getService().getRegistrationLogsByUser(userId, start, end);
+	}
+
+	public static List<RegistrationLog> getRegistrationLogsByUserEventType(
+		long userId, String eventType, int start, int end) {
+
+		return getService().getRegistrationLogsByUserEventType(
+			userId, eventType, start, end);
+	}
+
+	public static int getRegistrationLogsCount() {
+		return getService().getRegistrationLogsCount();
+	}
+
+	public static long getRegistrationLogsCountByEventType(String eventType) {
+		return getService().getRegistrationLogsCountByEventType(eventType);
+	}
+
+	public static long getRegistrationLogsCountByUser(long userId) {
+		return getService().getRegistrationLogsCountByUser(userId);
+	}
+
+	public static long getRegistrationLogsCountByUserEventType(
+		long userId, String eventType) {
+
+		return getService().getRegistrationLogsCountByUserEventType(
+			userId, eventType);
 	}
 
 	public static RegistrationLogService getService() {

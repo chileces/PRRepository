@@ -35,14 +35,14 @@ public class RegistrationLogLocalServiceWrapper
 
 	@Override
 	public com.amf.registration.model.RegistrationLog addRegistrationLog(
-			long groupId, long companyId, String userName,
+			long groupId, long companyId, long userId, String userName,
 			java.util.Date createDate, java.util.Date modifiedDate,
 			String eventType, String ipAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _registrationLogLocalService.addRegistrationLog(
-			groupId, companyId, userName, createDate, modifiedDate, eventType,
-			ipAddress);
+			groupId, companyId, userId, userName, createDate, modifiedDate,
+			eventType, ipAddress);
 	}
 
 	/**
@@ -237,13 +237,6 @@ public class RegistrationLogLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.amf.registration.model.RegistrationLog>
-		findAll() {
-
-		return _registrationLogLocalService.findAll();
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -295,14 +288,6 @@ public class RegistrationLogLocalServiceWrapper
 			registrationLogId);
 	}
 
-	@Override
-	public long getRegistrationLogCountByKeywords(
-		String fieldName, String value) {
-
-		return _registrationLogLocalService.getRegistrationLogCountByKeywords(
-			fieldName, value);
-	}
-
 	/**
 	 * Returns a range of all the registration logs.
 	 *
@@ -321,6 +306,31 @@ public class RegistrationLogLocalServiceWrapper
 		return _registrationLogLocalService.getRegistrationLogs(start, end);
 	}
 
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByEventType(String eventType, int start, int end) {
+
+		return _registrationLogLocalService.getRegistrationLogsByEventType(
+			eventType, start, end);
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByUser(long userId, int start, int end) {
+
+		return _registrationLogLocalService.getRegistrationLogsByUser(
+			userId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.amf.registration.model.RegistrationLog>
+		getRegistrationLogsByUserEventType(
+			long userId, String eventType, int start, int end) {
+
+		return _registrationLogLocalService.getRegistrationLogsByUserEventType(
+			userId, eventType, start, end);
+	}
+
 	/**
 	 * Returns the number of registration logs.
 	 *
@@ -329,6 +339,26 @@ public class RegistrationLogLocalServiceWrapper
 	@Override
 	public int getRegistrationLogsCount() {
 		return _registrationLogLocalService.getRegistrationLogsCount();
+	}
+
+	@Override
+	public long getRegistrationLogsCountByEventType(String eventType) {
+		return _registrationLogLocalService.getRegistrationLogsCountByEventType(
+			eventType);
+	}
+
+	@Override
+	public long getRegistrationLogsCountByUser(long userId) {
+		return _registrationLogLocalService.getRegistrationLogsCountByUser(
+			userId);
+	}
+
+	@Override
+	public long getRegistrationLogsCountByUserEventType(
+		long userId, String eventType) {
+
+		return _registrationLogLocalService.
+			getRegistrationLogsCountByUserEventType(userId, eventType);
 	}
 
 	/**

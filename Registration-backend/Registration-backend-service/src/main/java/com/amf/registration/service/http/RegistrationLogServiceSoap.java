@@ -66,7 +66,7 @@ public class RegistrationLogServiceSoap {
 
 	public static com.amf.registration.model.RegistrationLogSoap
 			addRegistrationLog(
-				long groupId, long companyId, String userName,
+				long groupId, long companyId, long userId, String userName,
 				java.util.Date createDate, java.util.Date modifiedDate,
 				String eventType, String ipAddress)
 		throws RemoteException {
@@ -74,8 +74,8 @@ public class RegistrationLogServiceSoap {
 		try {
 			com.amf.registration.model.RegistrationLog returnValue =
 				RegistrationLogServiceUtil.addRegistrationLog(
-					groupId, companyId, userName, createDate, modifiedDate,
-					eventType, ipAddress);
+					groupId, companyId, userId, userName, createDate,
+					modifiedDate, eventType, ipAddress);
 
 			return com.amf.registration.model.RegistrationLogSoap.toSoapModel(
 				returnValue);
@@ -87,12 +87,14 @@ public class RegistrationLogServiceSoap {
 		}
 	}
 
-	public static com.amf.registration.model.RegistrationLogSoap[] findAll()
+	public static com.amf.registration.model.RegistrationLogSoap[]
+			getRegistrationLogs(int start, int end)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.amf.registration.model.RegistrationLog>
-				returnValue = RegistrationLogServiceUtil.findAll();
+				returnValue = RegistrationLogServiceUtil.getRegistrationLogs(
+					start, end);
 
 			return com.amf.registration.model.RegistrationLogSoap.toSoapModels(
 				returnValue);
@@ -105,13 +107,14 @@ public class RegistrationLogServiceSoap {
 	}
 
 	public static com.amf.registration.model.RegistrationLogSoap[]
-			findByEventType(String eventType, int start, int end)
+			getRegistrationLogsByUser(long userId, int start, int end)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.amf.registration.model.RegistrationLog>
-				returnValue = RegistrationLogServiceUtil.findByEventType(
-					eventType, start, end);
+				returnValue =
+					RegistrationLogServiceUtil.getRegistrationLogsByUser(
+						userId, start, end);
 
 			return com.amf.registration.model.RegistrationLogSoap.toSoapModels(
 				returnValue);
@@ -123,14 +126,104 @@ public class RegistrationLogServiceSoap {
 		}
 	}
 
-	public static long getRegistrationLogCountByKeywords(
-			String fieldName, String value)
+	public static com.amf.registration.model.RegistrationLogSoap[]
+			getRegistrationLogsByEventType(String eventType, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.amf.registration.model.RegistrationLog>
+				returnValue =
+					RegistrationLogServiceUtil.getRegistrationLogsByEventType(
+						eventType, start, end);
+
+			return com.amf.registration.model.RegistrationLogSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.amf.registration.model.RegistrationLogSoap[]
+			getRegistrationLogsByUserEventType(
+				long userId, String eventType, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.amf.registration.model.RegistrationLog>
+				returnValue =
+					RegistrationLogServiceUtil.
+						getRegistrationLogsByUserEventType(
+							userId, eventType, start, end);
+
+			return com.amf.registration.model.RegistrationLogSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static long getRegistrationLogsCountByEventType(String eventType)
 		throws RemoteException {
 
 		try {
 			long returnValue =
-				RegistrationLogServiceUtil.getRegistrationLogCountByKeywords(
-					fieldName, value);
+				RegistrationLogServiceUtil.getRegistrationLogsCountByEventType(
+					eventType);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static long getRegistrationLogsCountByUserEventType(
+			long userId, String eventType)
+		throws RemoteException {
+
+		try {
+			long returnValue =
+				RegistrationLogServiceUtil.
+					getRegistrationLogsCountByUserEventType(userId, eventType);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getRegistrationLogsCount() throws RemoteException {
+		try {
+			int returnValue =
+				RegistrationLogServiceUtil.getRegistrationLogsCount();
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static long getRegistrationLogsCountByUser(long userId)
+		throws RemoteException {
+
+		try {
+			long returnValue =
+				RegistrationLogServiceUtil.getRegistrationLogsCountByUser(
+					userId);
 
 			return returnValue;
 		}
