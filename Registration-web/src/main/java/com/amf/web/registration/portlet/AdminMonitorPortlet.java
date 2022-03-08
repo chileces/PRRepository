@@ -14,9 +14,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.Registration",
+		"com.liferay.portlet.display-category=category.AdminMonitor",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=AdminMonitor",
 		"javax.portlet.init-param.template-path=/monitor/",
 		"javax.portlet.init-param.view-template=/monitor/view.jsp",
