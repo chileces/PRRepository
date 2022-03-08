@@ -30,6 +30,7 @@
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.liferay.portal.kernel.model.Contact" %>
 
 <%@
@@ -64,5 +65,5 @@ page import="com.liferay.portal.kernel.exception.RegionCodeException" %>
 <%@
 page import="com.amf.registration.model.RegistrationLog" %>
 <liferay-theme:defineObjects />
-
+<liferay-frontend:defineObjects />
 <portlet:defineObjects />
