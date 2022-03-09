@@ -13,14 +13,14 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:MM:SS");
 		
 		
  		<liferay-ui:search-container-column-text 
-			name="Create Date" value="<%= sdf.format(entry.getCreateDate()) %>"> 
+			name="date-time" value="<%= sdf.format(entry.getCreateDate()) %>"> 
 		</liferay-ui:search-container-column-text>
 		<liferay-ui:search-container-column-text property="userName"
-			name="Display Name" />
+			name="user" />
 		<liferay-ui:search-container-column-text property="ipAddress"
-			name="IP Address" />
+			name="ip-address" />
 		<liferay-ui:search-container-column-text property="eventType"
-			name="Event Type" />
+			name="event-type" />
 	</liferay-ui:search-container-row>
 	<%-- Iterator / Paging --%>
 	<liferay-ui:search-iterator markupView="lexicon" />
