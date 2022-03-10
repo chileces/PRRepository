@@ -13,10 +13,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -93,19 +90,12 @@ public class ViewUserActivitiesMVCRenderCommand implements MVCRenderCommand {
 				count = _registrationLogService.getRegistrationLogsCountByUserEventType(userId, eventType);
 			}
 		}
-		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("eventFilter", eventType);
-
-		/*
-		 * Creating IteratorURL and in that we will pass tab parameter
-		 */
+		
+		// Creating IteratorURL and in that we will pass tab parameter
+		
 		PortletURL iteratorURL = renderResponse.createRenderURL();
-		Iterator<Map.Entry<String, String>> entries = paramMap.entrySet().iterator();
-		while (entries.hasNext()) {
-			Map.Entry<String, String> entry = entries.next();
-			iteratorURL.setParameter(entry.getKey(), entry.getValue());
-		}
-
+		iteratorURL.setParameter("eventFilter", eventType);
+		
 		// Set request attributes.
 		renderRequest.setAttribute("iteratorURL", iteratorURL);
 		renderRequest.setAttribute("registrationLogs", registrationLogs);
