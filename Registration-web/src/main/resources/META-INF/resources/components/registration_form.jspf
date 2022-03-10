@@ -271,7 +271,9 @@
 
 				<div class="form-group-autofit">
 					<div class="form-group-item">
-						<aui:input name="homePhone"></aui:input>
+						<aui:input name="homePhone">
+							<aui:validator name="required" />
+						</aui:input>
 					</div>
 					<div class="form-group-item">
 						<aui:input name="mobilePhone"></aui:input>
