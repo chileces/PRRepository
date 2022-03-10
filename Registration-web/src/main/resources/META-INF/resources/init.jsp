@@ -32,7 +32,7 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.liferay.portal.kernel.model.Contact" %>
-
+<%@ page import="com.liferay.portal.kernel.model.User" %>
 <%@
 page import="com.liferay.portal.kernel.exception.AddressCityException" %><%@
 page import="com.liferay.portal.kernel.exception.AddressStreetException" %><%@
