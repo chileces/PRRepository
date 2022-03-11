@@ -17,13 +17,10 @@ package com.amf.registration.service.impl;
 import com.amf.registration.model.RegistrationLog;
 import com.amf.registration.service.base.RegistrationLogLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -51,6 +48,12 @@ public class RegistrationLogLocalServiceImpl extends RegistrationLogLocalService
 		registrationLog.setUserId(userId);
 		super.addRegistrationLog(registrationLog);
 
+		boolean portletActions = false;
+		boolean addGroupPermissions = true;
+		boolean addGuestPermissions = true;
+		resourceLocalService.addResources(companyId, groupId, userId, RegistrationLog.class.getName(),
+				registrationLog.getRegistrationLogId(), portletActions, addGroupPermissions, addGuestPermissions);
+		
 		return registrationLog;
 	}
 
@@ -97,6 +100,5 @@ public class RegistrationLogLocalServiceImpl extends RegistrationLogLocalService
 		}
 
 		return dynamicQuery;
-	}
-
+	}	
 }
