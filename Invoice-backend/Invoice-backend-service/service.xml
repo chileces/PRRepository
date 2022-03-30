@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="com.liferay.training">
+	<namespace>CustomInvoice</namespace>
+
+	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
+	<entity local-service="true" name="PersistedInvoice"
+		remote-service="true">
+
+
+		<!-- PK fields -->
+
+		<column name="persistedInvoiceId" primary="true" type="long"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		
+		<!-- Data field -->
+		<column name="gst" type="double"></column>
+		<column name="cardCode" type="String"></column>
+		<column name="cardName" type="String"></column>
+		<column name="carrier" type="String"></column>
+		<column name="documentDate" type="Date"></column>
+		<column name="documentNumber" type="String"></column>
+		<column name="documentStatus" type="String"></column>
+		<column name="dueDate" type="Date"></column>
+		<column name="freightAmount" type="double"></column>
+		<column name="invoiceTotal" type="double"></column>
+		<column name="invoiceLines" type="Collection" entity="PersistedInvoiceLine" mapping-key="persistedInvoiceId" primary="false"></column>
+        <order by="asc">
+            <order-column name="createDate" order-by="asc"></order-column>
+        </order>
+		
+	</entity>
+	<entity name="PersistedInvoiceLine" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="persistedInvoiceLineId" primary="true" type="long"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <column name="persistedInvoiceId" type="long"></column>
+        
+        <!-- Data field -->
+        
+        <column name="price" type="double"></column>
+        <column name="quantity" type="Integer"></column>
+        <column name="discountPercent" type="double"></column>
+     	<column name="itemCode" type="String"></column>
+     	<column name="lineNum" type="Integer"></column>
+        <column name="lineTotal" type="double"></column>
+        <column name="salesOrder" type="long"></column>
+        <column name="salesOrderlineNum" type="Integer"></column>
+        <order by="asc">
+            <order-column name="createDate" order-by="asc"></order-column>
+        </order>
+        <finder name="CustomInvoiceId" return-type="Collection">
+            <finder-column name="persistedInvoiceId"></finder-column>
+        </finder>        
+	</entity>
+</service-builder>
