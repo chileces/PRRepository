@@ -1,0 +1,9 @@
+apiDir: "../headless-invoice-api/src/main/java"
+apiPackagePath: "com.liferay.training.headless"
+application:
+    baseURI: "/headless-invoice"
+    className: "HeadlessInvoiceApplication"
+    name: "HeadlessInvoice"
+author: "ces-user"
+clientDir: "../headless-invoice-client/src/main/java"
+testDir: "../headless-invoice-test/src/testIntegration/java"

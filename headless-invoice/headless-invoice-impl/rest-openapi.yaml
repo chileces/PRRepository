@@ -1,0 +1,253 @@
+components:
+  schemas:
+    InvoiceLine:
+      description: This object is mapped with commerceorderitem
+      properties:
+        price:
+          description: Price of good
+          format: double
+          type: number
+        quantity:
+          description: Number of quantity
+          format: int32
+          type: integer
+        discountPercent:
+          description: Discount percent
+          format: double
+          type: number
+        itemCode:
+          description: A commerce product SKU
+          type: string
+        lineNum:
+          description: Line number
+          format: int32
+          type: integer
+        lineTotal:
+          description: Line total
+          format: double
+          type: number
+        salesOrder:
+          description: The sales order
+          format: int64
+          type: integer
+        salesOrderlineNum:
+          description: Sale order line number
+          format: int32
+          type: integer
+      type: object
+    Invoice:
+      description: Contains all of the information for a Sapphire invoice
+      properties:
+        gst:
+          description: A business instrument issued by a supplier or a seller to recipient or the buyer of goods and services
+          format: double
+          type: number
+        id:
+          description: The invoice identify
+          format: int64
+          type: integer
+        cardCode:
+          description: Business partner identify, this field is mapped with Account external reference code
+          type: string
+        cardName:
+          description: Business partner full name, this field is mapped with Commerce Account name
+          type: string
+        carrier:
+          description: A carrier is a transportation service provider
+          type: string
+        documentDate:
+          description: Document date
+          format: date
+          type: string
+        documentNumber:
+          description: Document number
+          type: string
+        documentStatus:
+          description: your current balance
+          type: string
+        dueDate:
+          description: due date
+          format: date
+          type: string
+        freightAmount:
+          description: Shippment's payment
+          format: double
+          type: number
+        invoiceTotal:
+          description: Invoice total number
+          format: double
+          type: number
+        invoiceLines:
+          description: Invoice lines
+          items:
+            $ref: "#/components/schemas/InvoiceLine"
+          type: array
+      type: object
+openapi: 3.0.1
+info:
+  description: "API for accessing Invoice details."
+  license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  title: "Headless Commerce Invoicing "
+  version: v1.0
+paths:
+  "/invoices":
+    get:
+      operationId: getInvoicesPage
+      tags: ["Invoice"]
+      description: Retrieves the list of Invoices Results can be paginated, filtered, searched, and sorted.
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Invoice"
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Invoice"
+                type: array
+    post:
+      operationId: postInvoice
+      tags: ["Invoice"]
+      description: Create a new Invoice record
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+  "/invoices/{invoiceId}":
+    get:
+      operationId: getInvoice
+      tags: ["Invoice"]
+      description: Retrieves the Invoice via its ID.
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    put:
+      operationId: putInvoice
+      tags: ["Invoice"]
+      description: Replaces the Invoice, the information sent in the request body. Any missing fields are deleted, unless they are required.
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+      responses:
+        200:
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    patch:
+      operationId: patchInvoice
+      tags: ["Invoice"]
+      description: Replaces the Invoice with the information sent in the request body. Any missing fields are deleted, unless they are required.
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Invoice"
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+    delete:
+      operationId: deleteInvoice
+      tags: ["Invoice"]
+      description: Deletes the Invoice and returns a 204 if the operation succeeds.
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        204:
+          description: ""
+          content:
+            application/json: {}
+            application/xml: {}
