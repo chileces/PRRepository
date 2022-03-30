@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.training.model.PersistedInvoice">
+		<field name="persistedInvoiceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="gst" type="double" />
+		<field name="cardCode" type="String" />
+		<field name="cardName" type="String" />
+		<field name="carrier" type="String" />
+		<field name="documentDate" type="Date" />
+		<field name="documentNumber" type="String" />
+		<field name="documentStatus" type="String" />
+		<field name="dueDate" type="Date" />
+		<field name="freightAmount" type="double" />
+		<field name="invoiceTotal" type="double" />
+	</model>
+	<model name="com.liferay.training.model.PersistedInvoiceLine">
+		<field name="persistedInvoiceLineId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="persistedInvoiceId" type="long" />
+		<field name="price" type="double" />
+		<field name="quantity" type="Integer" />
+		<field name="discountPercent" type="double" />
+		<field name="itemCode" type="String" />
+		<field name="lineNum" type="Integer" />
+		<field name="lineTotal" type="double" />
+		<field name="salesOrder" type="long" />
+		<field name="salesOrderlineNum" type="Integer" />
+	</model>
+</model-hints>
