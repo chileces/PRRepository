@@ -1,0 +1,6 @@
+Bundle-Name: headless-invoice-api
+Bundle-SymbolicName: com.liferay.training.headless.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.training.headless.dto.v1_0,\
+	com.liferay.training.headless.resource.v1_0

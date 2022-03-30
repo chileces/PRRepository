@@ -1,0 +1,11 @@
+dependencies {
+	compileOnly project(":modules:headless-invoice:headless-invoice-api")
+	compileOnly project(":modules:Invoice-backend:Invoice-backend-api")
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api"
+	compileOnly group: "org.slf4j", name: "slf4j-api"	
+	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.216"
+	
+}
+
+group = "com.liferay.training.headless"

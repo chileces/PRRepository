@@ -1,0 +1,6 @@
+Bundle-Name: headless-invoice-client
+Bundle-SymbolicName: com.liferay.training.headless.client
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.liferay.training.headless.client.resource.v1_0,\
+	com.liferay.training.headless.client.dto.v1_0
