@@ -22,20 +22,14 @@
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@ page import="com.liferay.training.web.constants.MVCCommandNames"%>
-<%@ page import="com.liferay.portal.kernel.service.AddressLocalServiceUtil"%>
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@ page import="com.liferay.portal.kernel.model.Address"%>
-<%@ page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %>
-<%@ page import="com.liferay.portal.kernel.exception.UserScreenNameException" %>
-<%@ page import="com.liferay.portal.kernel.util.Validator" %>
-<%@ page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %>
+
+<%@ page import="com.liferay.commerce.exception.CommerceOrderValidatorException" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.liferay.portal.kernel.model.Contact" %>
-<%@ page import="com.liferay.portal.kernel.model.User" %>
 <%@ page import="com.liferay.training.model.PersistedInvoice" %>
 <%@ page import="com.liferay.training.model.PersistedInvoiceLine" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="com.liferay.commerce.constants.CommerceOrderConstants" %>
 
 <liferay-theme:defineObjects />
 <liferay-frontend:defineObjects />
