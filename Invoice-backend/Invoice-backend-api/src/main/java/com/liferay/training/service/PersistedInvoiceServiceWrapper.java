@@ -143,6 +143,15 @@ public class PersistedInvoiceServiceWrapper
 	}
 
 	@Override
+	public com.liferay.training.model.PersistedInvoice updatePersistedInvoice(
+			com.liferay.training.model.PersistedInvoice persistedInvoice)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _persistedInvoiceService.updatePersistedInvoice(
+			persistedInvoice);
+	}
+
+	@Override
 	public PersistedInvoiceService getWrappedService() {
 		return _persistedInvoiceService;
 	}

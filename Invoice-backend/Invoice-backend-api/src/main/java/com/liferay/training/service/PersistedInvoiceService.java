@@ -109,4 +109,8 @@ public interface PersistedInvoiceService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public PersistedInvoice updatePersistedInvoice(
+			PersistedInvoice persistedInvoice)
+		throws PortalException;
+
 }

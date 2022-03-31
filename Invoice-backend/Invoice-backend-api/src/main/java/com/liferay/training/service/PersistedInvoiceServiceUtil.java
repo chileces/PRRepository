@@ -128,6 +128,13 @@ public class PersistedInvoiceServiceUtil {
 			invoiceTotal, invoiceLines, serviceContext);
 	}
 
+	public static PersistedInvoice updatePersistedInvoice(
+			PersistedInvoice persistedInvoice)
+		throws PortalException {
+
+		return getService().updatePersistedInvoice(persistedInvoice);
+	}
+
 	public static PersistedInvoiceService getService() {
 		return _service;
 	}
