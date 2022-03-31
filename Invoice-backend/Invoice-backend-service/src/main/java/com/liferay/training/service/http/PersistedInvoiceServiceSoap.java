@@ -115,6 +115,28 @@ public class PersistedInvoiceServiceSoap {
 	}
 
 	public static com.liferay.training.model.PersistedInvoiceSoap
+			updatePersistedInvoice(
+				com.liferay.training.model.PersistedInvoiceSoap
+					persistedInvoice)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.model.PersistedInvoice returnValue =
+				PersistedInvoiceServiceUtil.updatePersistedInvoice(
+					com.liferay.training.model.impl.PersistedInvoiceModelImpl.
+						toModel(persistedInvoice));
+
+			return com.liferay.training.model.PersistedInvoiceSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.model.PersistedInvoiceSoap
 			deletePersistedInvoice(Long persistedInvoiceId)
 		throws RemoteException {
 

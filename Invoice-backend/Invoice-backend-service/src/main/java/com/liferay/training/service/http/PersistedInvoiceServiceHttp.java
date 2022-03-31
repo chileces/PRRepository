@@ -164,6 +164,48 @@ public class PersistedInvoiceServiceHttp {
 	}
 
 	public static com.liferay.training.model.PersistedInvoice
+			updatePersistedInvoice(
+				HttpPrincipal httpPrincipal,
+				com.liferay.training.model.PersistedInvoice persistedInvoice)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PersistedInvoiceServiceUtil.class, "updatePersistedInvoice",
+				_updatePersistedInvoiceParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, persistedInvoice);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.training.model.PersistedInvoice)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.training.model.PersistedInvoice
 			deletePersistedInvoice(
 				HttpPrincipal httpPrincipal, Long persistedInvoiceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -172,7 +214,7 @@ public class PersistedInvoiceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PersistedInvoiceServiceUtil.class, "deletePersistedInvoice",
-				_deletePersistedInvoiceParameterTypes3);
+				_deletePersistedInvoiceParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, persistedInvoiceId);
@@ -228,7 +270,7 @@ public class PersistedInvoiceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PersistedInvoiceServiceUtil.class, "updatePersistedInvoice",
-				_updatePersistedInvoiceParameterTypes4);
+				_updatePersistedInvoiceParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, persistedInvoiceId, gst, cardCode, cardName, carrier,
@@ -278,7 +320,7 @@ public class PersistedInvoiceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PersistedInvoiceServiceUtil.class, "patchPersistedInvoice",
-				_patchPersistedInvoiceParameterTypes5);
+				_patchPersistedInvoiceParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, persistedInvoiceId, gst, cardCode, cardName, carrier,
@@ -328,7 +370,7 @@ public class PersistedInvoiceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PersistedInvoiceServiceUtil.class, "addPersistedInvoice",
-				_addPersistedInvoiceParameterTypes6);
+				_addPersistedInvoiceParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, gst, cardCode, cardName, carrier, documentDate,
@@ -373,7 +415,7 @@ public class PersistedInvoiceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PersistedInvoiceServiceUtil.class, "getInvoicesByKeywords",
-				_getInvoicesByKeywordsParameterTypes7);
+				_getInvoicesByKeywordsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, keywords, start, end, orderByComparator);
@@ -406,7 +448,7 @@ public class PersistedInvoiceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PersistedInvoiceServiceUtil.class, "getInvoicesCountByKeywords",
-				_getInvoicesCountByKeywordsParameterTypes8);
+				_getInvoicesCountByKeywordsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, keywords);
@@ -441,9 +483,11 @@ public class PersistedInvoiceServiceHttp {
 	private static final Class<?>[] _countAllParameterTypes1 = new Class[] {};
 	private static final Class<?>[] _getPersistedInvoiceParameterTypes2 =
 		new Class[] {Long.class};
-	private static final Class<?>[] _deletePersistedInvoiceParameterTypes3 =
+	private static final Class<?>[] _updatePersistedInvoiceParameterTypes3 =
+		new Class[] {com.liferay.training.model.PersistedInvoice.class};
+	private static final Class<?>[] _deletePersistedInvoiceParameterTypes4 =
 		new Class[] {Long.class};
-	private static final Class<?>[] _updatePersistedInvoiceParameterTypes4 =
+	private static final Class<?>[] _updatePersistedInvoiceParameterTypes5 =
 		new Class[] {
 			long.class, Double.class, String.class, String.class, String.class,
 			java.util.Date.class, String.class, String.class,
@@ -451,7 +495,7 @@ public class PersistedInvoiceServiceHttp {
 			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _patchPersistedInvoiceParameterTypes5 =
+	private static final Class<?>[] _patchPersistedInvoiceParameterTypes6 =
 		new Class[] {
 			long.class, Double.class, String.class, String.class, String.class,
 			java.util.Date.class, String.class, String.class,
@@ -459,7 +503,7 @@ public class PersistedInvoiceServiceHttp {
 			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addPersistedInvoiceParameterTypes6 =
+	private static final Class<?>[] _addPersistedInvoiceParameterTypes7 =
 		new Class[] {
 			Double.class, String.class, String.class, String.class,
 			java.util.Date.class, String.class, String.class,
@@ -467,12 +511,12 @@ public class PersistedInvoiceServiceHttp {
 			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _getInvoicesByKeywordsParameterTypes7 =
+	private static final Class<?>[] _getInvoicesByKeywordsParameterTypes8 =
 		new Class[] {
 			String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getInvoicesCountByKeywordsParameterTypes8 =
+	private static final Class<?>[] _getInvoicesCountByKeywordsParameterTypes9 =
 		new Class[] {String.class};
 
 }
