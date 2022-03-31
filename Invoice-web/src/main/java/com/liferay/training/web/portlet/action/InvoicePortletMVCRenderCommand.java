@@ -59,7 +59,6 @@ public class InvoicePortletMVCRenderCommand implements MVCRenderCommand {
 		// Get keywords.
 		
 		String keywords = ParamUtil.getString(renderRequest, "keywords");
-		System.out.println(keywords);
 		List<PersistedInvoice> results = null;
 		long count = 0;
 		if (!"".equals(keywords)) {

@@ -62,6 +62,7 @@ public class RenderInvoiceMVCActionCommand extends BaseMVCActionCommand {
 				lineNum++;
 			}	
 			Double gst = 1.0;
+			
 			String documentNumber = String.valueOf(order.getCommerceOrderId());
 			String documentStatus = CommerceOrderConstants.getOrderStatusLabel(order.getStatus());
 			String carrier = order.getShippingOptionName();
@@ -73,6 +74,8 @@ public class RenderInvoiceMVCActionCommand extends BaseMVCActionCommand {
 					order.getCreateDate(), documentNumber,documentStatus, order.getModifiedDate(),
 					freightAmount,
 					order.getTotalWithTaxAmount().doubleValue(), invoiceLines, serviceContext );
+			order.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_PROCESSING);
+			_commerceOrderLocalService.updateCommerceOrder(order);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
