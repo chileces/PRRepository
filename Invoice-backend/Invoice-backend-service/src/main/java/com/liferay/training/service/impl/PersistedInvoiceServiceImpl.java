@@ -55,7 +55,13 @@ public class PersistedInvoiceServiceImpl extends PersistedInvoiceServiceBaseImpl
 		return customInvoice;
 
 	}
-
+	
+	public PersistedInvoice updatePersistedInvoice(PersistedInvoice persistedInvoice) throws PortalException{
+		_persistedInvoiceModelResourcePermission.check(getPermissionChecker(),
+				persistedInvoiceLocalService.getPersistedInvoice(persistedInvoice.getPersistedInvoiceId()), ActionKeys.UPDATE);
+		return persistedInvoiceLocalService.updatePersistedInvoice(persistedInvoice);
+	}
+	
 	public PersistedInvoice deletePersistedInvoice(Long persistedInvoiceId) throws PrincipalException, PortalException {
 		_persistedInvoiceModelResourcePermission.check(getPermissionChecker(),
 				persistedInvoiceLocalService.getPersistedInvoice(persistedInvoiceId), ActionKeys.DELETE);
