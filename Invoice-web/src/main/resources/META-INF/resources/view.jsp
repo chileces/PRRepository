@@ -17,12 +17,12 @@ SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:MM:SS");
 			className="com.liferay.training.model.PersistedInvoice"
 			keyProperty="persistedInvoiceId" modelVar="entry">
 			<liferay-ui:search-container-column-text property="documentNumber"
+			 orderable="true"
 				name="documentNumber" />
 
 			<liferay-ui:search-container-column-text property="cardName"
 				orderable="<%= true %>" orderableProperty="cardName" name="cardName" />
-			<liferay-ui:search-container-column-text property="cardCode"
-				name="cardCode" />
+
 			<liferay-ui:search-container-column-text property="carrier"
 				name="carrier" />
 			<liferay-ui:search-container-column-text property="gst"

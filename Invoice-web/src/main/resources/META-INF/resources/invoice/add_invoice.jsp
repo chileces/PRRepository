@@ -12,6 +12,8 @@
 			keyProperty="commerceOrderId" modelVar="entry">
 			<liferay-ui:search-container-column-text property="commerceOrderId"
 				name="order-id" />
+			<liferay-ui:search-container-column-text property="commerceAccountId"
+				name="commerce-account-id" />
 			<liferay-ui:search-container-column-text
 				value="<%=entry.getCommerceAccount().getName() %>" name="account" />
 			<liferay-ui:search-container-column-text property="createDate"
@@ -19,14 +21,14 @@
 			<liferay-ui:search-container-column-text name="orderStatus"
 				value="<%=CommerceOrderConstants.getOrderStatusLabel(entry.getOrderStatus()) %>" />
 			<!-- 6 is orderStatus in-progress  -->
-			<c:if test="${entry.orderStatus eq  6}">
+			<c:if test="${entry.orderStatus ne 10}">
 				<liferay-ui:search-container-column-jsp name="actions"
 					path="/invoice/order_actions.jsp" />
 			</c:if>
-			<c:if test="${entry.orderStatus ne 6}">
+			<c:if test="${entry.orderStatus eq 10}">
 				<liferay-ui:search-container-column-text name="actions"
 					value="Already invoiced" />
-			</c:if>
+			</c:if> -
 		</liferay-ui:search-container-row>
 		<%-- Iterator / Paging --%>
 

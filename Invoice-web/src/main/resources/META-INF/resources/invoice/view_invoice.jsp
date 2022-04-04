@@ -63,12 +63,18 @@
 							<aui:validator name="required" />
 						</aui:input>
 					</div>
+					<div class="form-group-item">
+						<aui:input name="groupId" type="text"
+							label="groupId" readonly="true">
+							<aui:validator name="required" />
+						</aui:input>
+					</div>
 				</div>
 			</aui:fieldset>
 		</aui:fieldset-group>
 		<aui:button-row>
 			<aui:button cssClass="btn btn-primary" type="submit" value="Update" />
-			<aui:button cssClass="btn btn-primary" value="Payment" />
+			<aui:button cssClass="btn btn-primary" type="submit" value="Payment" disabled="<%=true %>" />
 			<aui:button cssClass="btn btn-secondary" onClick="${param.redirect}"
 				type="cancel" />
 		</aui:button-row>
