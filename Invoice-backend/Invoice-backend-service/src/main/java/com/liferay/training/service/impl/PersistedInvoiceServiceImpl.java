@@ -16,12 +16,19 @@ package com.liferay.training.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.training.model.PersistedInvoice;
 import com.liferay.training.model.PersistedInvoiceLine;
 import com.liferay.training.service.base.PersistedInvoiceServiceBaseImpl;
@@ -95,12 +102,13 @@ public class PersistedInvoiceServiceImpl extends PersistedInvoiceServiceBaseImpl
 	public PersistedInvoice addPersistedInvoice(final Double gst, final String cardCode, final String cardName,
 			final String carrier, final Date documentDate, final String documentNumber, final String documentStatus,
 			final Date dueDate, final Double freightAmount, final Double invoiceTotal,
+			final long commerceAccountId,
 			final List<PersistedInvoiceLine> invoiceLines,
 			final ServiceContext serviceContext) throws PortalException {
 		ModelResourcePermissionHelper.check(_persistedInvoiceModelResourcePermission, getPermissionChecker(),
 				serviceContext.getScopeGroupId(), 0, ActionKeys.ADD_ENTRY);
 		return persistedInvoiceLocalService.addPersistedInvoice(gst, cardCode, cardName, carrier, documentDate,
-				documentNumber, documentStatus, dueDate, freightAmount, invoiceTotal,invoiceLines, serviceContext);
+				documentNumber, documentStatus, dueDate, freightAmount, invoiceTotal, commerceAccountId,invoiceLines, serviceContext);
 	}
 
 	public List<PersistedInvoice> getInvoicesByKeywords(String keywords, int start, int end,
@@ -111,6 +119,28 @@ public class PersistedInvoiceServiceImpl extends PersistedInvoiceServiceBaseImpl
 	public long getInvoicesCountByKeywords(String keywords) {
 
 		return persistedInvoiceLocalService.getInvoicesCountByKeywords(keywords);
+	}
+	
+
+	public Page<PersistedInvoice> getInvoicesByKeywords(long companyId, String search, Filter filter, Pagination pagination, Sort[] sorts) throws Exception {
+		try {
+			return SearchUtil.search(
+					booleanQuery -> {
+						// does nothing, we just need the UnsafeConsumer<BooleanQuery, Exception> method
+					},
+					filter, PersistedInvoice.class, search, pagination,
+					queryConfig -> queryConfig.setSelectedFieldNames(
+							Field.ENTRY_CLASS_PK),
+					searchContext -> searchContext.setCompanyId(
+							companyId),
+					document -> 
+						persistedInvoiceLocalService.getPersistedInvoice(
+									GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+					sorts);
+		} catch (Exception e) {
+
+			throw e;
+		}
 	}
 	
 	

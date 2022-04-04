@@ -24,18 +24,27 @@ public class InvoiceModelDocumentContributor implements ModelDocumentContributor
 	public void contribute(Document document, PersistedInvoice baseModel) {
 		//Strip HTML
 		String cardName = HtmlUtil.extractText(baseModel.getCardName());
-		document.addText(Field.DESCRIPTION, cardName);
-		
+
+		document.addText("cardName", cardName);
 		String cardCode = HtmlUtil.extractText(baseModel.getCardCode());
-		document.addText(Field.TITLE, cardCode);
+
+		document.addText("cardCode", cardCode);
 		
 		document.addDate(Field.MODIFIED_DATE, baseModel.getModifiedDate());
 		
+		String documentNumber = baseModel.getDocumentNumber();
+
+		document.addNumber("documentNumber", documentNumber);
+		document.addNumber("invoiceTotal", baseModel.getInvoiceTotal());
+		document.addNumber("commerceAccountId", baseModel.getCommerceAccountId());
 		//handle localized fields
 		for (Locale locale : LanguageUtil.getAvailableLocales(baseModel.getGroupId())) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 			document.addText(LocalizationUtil.getLocalizedName("cardName", languageId), cardName);
 			document.addText(LocalizationUtil.getLocalizedName("cardCode", languageId), cardCode);
+			document.addText(LocalizationUtil.getLocalizedName("documentNumber", languageId), documentNumber);
+			document.addNumber(LocalizationUtil.getLocalizedName("invoiceTotal", languageId), baseModel.getInvoiceTotal());
+
 		}
 		
 	}

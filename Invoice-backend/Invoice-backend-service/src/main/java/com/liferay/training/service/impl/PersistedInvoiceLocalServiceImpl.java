@@ -59,6 +59,7 @@ public class PersistedInvoiceLocalServiceImpl extends PersistedInvoiceLocalServi
 	public PersistedInvoice addPersistedInvoice(final Double gst, final String cardCode, final String cardName,
 			final String carrier, final Date documentDate, final String documentNumber, final String documentStatus,
 			final Date dueDate, final Double freightAmount, final Double invoiceTotal,
+			final long commerceAccountId,
 			final List<PersistedInvoiceLine> invoiceLines,
 			final ServiceContext serviceContext) throws PortalException {
 		PersistedInvoice pInvoice = createPersistedInvoice(
@@ -75,7 +76,7 @@ public class PersistedInvoiceLocalServiceImpl extends PersistedInvoiceLocalServi
 			pInvoice.setUserName(user.getFullName());
 			pInvoice.setUserUuid(user.getUserUuid());
 		}
-		
+		pInvoice.setCommerceAccountId(commerceAccountId);
 		pInvoice.setGroupId(serviceContext.getScopeGroupId());
 		pInvoice.setGst(gst);
 		pInvoice.setCardCode(cardCode);

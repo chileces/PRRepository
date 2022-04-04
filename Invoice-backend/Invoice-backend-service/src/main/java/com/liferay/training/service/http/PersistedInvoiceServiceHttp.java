@@ -361,7 +361,7 @@ public class PersistedInvoiceServiceHttp {
 				String cardName, String carrier, java.util.Date documentDate,
 				String documentNumber, String documentStatus,
 				java.util.Date dueDate, Double freightAmount,
-				Double invoiceTotal,
+				Double invoiceTotal, long commerceAccountId,
 				java.util.List<com.liferay.training.model.PersistedInvoiceLine>
 					invoiceLines,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -375,7 +375,7 @@ public class PersistedInvoiceServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, gst, cardCode, cardName, carrier, documentDate,
 				documentNumber, documentStatus, dueDate, freightAmount,
-				invoiceTotal, invoiceLines, serviceContext);
+				invoiceTotal, commerceAccountId, invoiceLines, serviceContext);
 
 			Object returnObj = null;
 
@@ -474,6 +474,48 @@ public class PersistedInvoiceServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.vulcan.pagination.Page
+		<com.liferay.training.model.PersistedInvoice> getInvoicesByKeywords(
+				HttpPrincipal httpPrincipal, long companyId, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				com.liferay.portal.vulcan.pagination.Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+			throws Exception {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PersistedInvoiceServiceUtil.class, "getInvoicesByKeywords",
+				_getInvoicesByKeywordsParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, search, filter, pagination, sorts);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof Exception) {
+					throw (Exception)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.vulcan.pagination.Page
+				<com.liferay.training.model.PersistedInvoice>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		PersistedInvoiceServiceHttp.class);
 
@@ -507,7 +549,7 @@ public class PersistedInvoiceServiceHttp {
 		new Class[] {
 			Double.class, String.class, String.class, String.class,
 			java.util.Date.class, String.class, String.class,
-			java.util.Date.class, Double.class, Double.class,
+			java.util.Date.class, Double.class, Double.class, long.class,
 			java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -518,5 +560,12 @@ public class PersistedInvoiceServiceHttp {
 		};
 	private static final Class<?>[] _getInvoicesCountByKeywordsParameterTypes9 =
 		new Class[] {String.class};
+	private static final Class<?>[] _getInvoicesByKeywordsParameterTypes10 =
+		new Class[] {
+			long.class, String.class,
+			com.liferay.portal.kernel.search.filter.Filter.class,
+			com.liferay.portal.vulcan.pagination.Pagination.class,
+			com.liferay.portal.kernel.search.Sort[].class
+		};
 
 }

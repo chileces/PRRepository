@@ -21,8 +21,10 @@ public class InvoiceKeywordQueryContributor implements KeywordQueryContributor{
 	public void contribute(String keywords, BooleanQuery booleanQuery,
 			KeywordQueryContributorHelper keywordQueryContributorHelper) {
 		SearchContext searchContext = keywordQueryContributorHelper.getSearchContext();
+		queryHelper.addSearchLocalizedTerm(booleanQuery, searchContext, "documentNumber", false);
+		queryHelper.addSearchLocalizedTerm(booleanQuery, searchContext, "invoiceTotal", false);
 		queryHelper.addSearchLocalizedTerm(booleanQuery, searchContext, "cardName", false);
-		queryHelper.addSearchLocalizedTerm(booleanQuery, searchContext, "cardCode", false);
+		queryHelper.addSearchLocalizedTerm(booleanQuery, searchContext, "cardCode", false);		
 	}
 	@Reference
 	protected QueryHelper queryHelper;

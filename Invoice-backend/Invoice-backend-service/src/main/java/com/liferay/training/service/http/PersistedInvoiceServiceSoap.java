@@ -225,6 +225,7 @@ public class PersistedInvoiceServiceSoap {
 				java.util.Date documentDate, String documentNumber,
 				String documentStatus, java.util.Date dueDate,
 				Double freightAmount, Double invoiceTotal,
+				long commerceAccountId,
 				com.liferay.training.model.PersistedInvoiceLineSoap[]
 					invoiceLines,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -235,7 +236,7 @@ public class PersistedInvoiceServiceSoap {
 				PersistedInvoiceServiceUtil.addPersistedInvoice(
 					gst, cardCode, cardName, carrier, documentDate,
 					documentNumber, documentStatus, dueDate, freightAmount,
-					invoiceTotal,
+					invoiceTotal, commerceAccountId,
 					com.liferay.training.model.impl.
 						PersistedInvoiceLineModelImpl.toModels(invoiceLines),
 					serviceContext);
@@ -280,6 +281,29 @@ public class PersistedInvoiceServiceSoap {
 			long returnValue =
 				PersistedInvoiceServiceUtil.getInvoicesCountByKeywords(
 					keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.vulcan.pagination.Page
+		<com.liferay.training.model.PersistedInvoice> getInvoicesByKeywords(
+				long companyId, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				com.liferay.portal.vulcan.pagination.Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+			throws RemoteException {
+
+		try {
+			com.liferay.portal.vulcan.pagination.Page
+				<com.liferay.training.model.PersistedInvoice> returnValue =
+					PersistedInvoiceServiceUtil.getInvoicesByKeywords(
+						companyId, search, filter, pagination, sorts);
 
 			return returnValue;
 		}
