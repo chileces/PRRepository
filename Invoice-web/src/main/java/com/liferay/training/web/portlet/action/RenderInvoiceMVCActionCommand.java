@@ -73,8 +73,10 @@ public class RenderInvoiceMVCActionCommand extends BaseMVCActionCommand {
 					carrier,
 					order.getCreateDate(), documentNumber,documentStatus, order.getModifiedDate(),
 					freightAmount,
-					order.getTotalWithTaxAmount().doubleValue(), invoiceLines, serviceContext );
+					order.getTotalWithTaxAmount().doubleValue(), 
+					order.getCommerceAccountId(), invoiceLines, serviceContext );
 			order.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_PROCESSING);
+			
 			_commerceOrderLocalService.updateCommerceOrder(order);
 			
 		}catch(Exception e) {

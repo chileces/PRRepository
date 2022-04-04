@@ -46,7 +46,7 @@ public class ViewSingleInvoiceMVCRenderCommand implements MVCRenderCommand {
 				SearchContainer.DEFAULT_DELTA);
 		int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
 		int end = start + delta;
-		
+
 		try {
 			// Call the service to get the assignment.
 			PersistedInvoice persistedInvoice = _persistedInvoiceService.getPersistedInvoice(persistedInvoiceId);

@@ -1,12 +1,19 @@
 package com.liferay.training.web.portlet.action;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.training.web.constants.InvoicePortletKeys;
 import com.liferay.training.web.constants.MVCCommandNames;
@@ -17,6 +24,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,9 +49,20 @@ public class AddInvoiceMVCRenderCommand implements MVCRenderCommand {
 		int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
 		int end = start + delta;
 		// Set back icon visible.
-		
-		List<CommerceOrder> orders = _commerceOrderLocalService.getCommerceOrders(start, end);
-		long searchCount = _commerceOrderLocalService.getCommerceOrdersCount();
+		long commerceAccountId = 0;
+		HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+		CommerceContext _commerceContext = (CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+		try {
+			commerceAccountId = _commerceContext.getCommerceAccount().getCommerceAccountId();
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		OrderByComparator<CommerceOrder> byComparator = OrderByComparatorFactoryUtil.create("CommerceOrder", "modifiedDate", true ); 
+		List<CommerceOrder> orders = _commerceOrderLocalService.getCommerceOrdersByCommerceAccountId(commerceAccountId, start, end, byComparator);
+		long searchCount = _commerceOrderLocalService.getCommerceOrdersCountByCommerceAccountId(commerceAccountId);
 		PortletURL iteratorURL = renderResponse.createRenderURL();
 		iteratorURL.setParameter("mvcRenderCommandName", MVCCommandNames.ADD_INVOICE);
 		renderRequest.setAttribute("iteratorURL", iteratorURL);
@@ -55,10 +74,12 @@ public class AddInvoiceMVCRenderCommand implements MVCRenderCommand {
 		// renderRequest.setAttribute("previewRender", false);
 
 		 portletDisplay.setURLBack(redirect);
+				 
 		//Set assignment to the request attributes.
 		return "/invoice/add_invoice.jsp";
 	}
-
+	@Reference
+	private Portal _portal;
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
 

@@ -152,9 +152,9 @@ public class InvoicesManagementToolbarDisplayContext extends BaseManagementToolb
 					dropdownItem.setLabel(LanguageUtil.get(request, "cardName"));
 				});
 				add(dropdownItem -> {
-					dropdownItem.setActive("carrier".equals(getOrderByCol()));
-					dropdownItem.setHref(_getCurrentSortingURL(), "orderByCol", "carrier");
-					dropdownItem.setLabel(LanguageUtil.get(request, "carrier"));
+					dropdownItem.setActive("documentNumber".equals(getOrderByCol()));
+					dropdownItem.setHref(_getCurrentSortingURL(), "orderByCol", "documentNumber");
+					dropdownItem.setLabel(LanguageUtil.get(request, "documentNumber"));
 				});
 				add(dropdownItem -> {
 					dropdownItem.setActive("invoiceTotal".equals(getOrderByCol()));
@@ -178,7 +178,7 @@ public class InvoicesManagementToolbarDisplayContext extends BaseManagementToolb
 		PortletURL sortingURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 		sortingURL.setParameter("mvcRenderCommandName", MVCCommandNames.VIEW_INVOICES);
 		// Reset current page.
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+		//sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 		String keywords = ParamUtil.getString(request, "keywords");
 		if (Validator.isNotNull(keywords)) {
 			sortingURL.setParameter("keywords", keywords);
