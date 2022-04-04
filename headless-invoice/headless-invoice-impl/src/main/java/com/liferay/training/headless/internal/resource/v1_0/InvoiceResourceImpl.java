@@ -1,5 +1,7 @@
 package com.liferay.training.headless.internal.resource.v1_0;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
@@ -77,11 +79,13 @@ public class InvoiceResourceImpl extends BaseInvoiceResourceImpl implements Enti
 		for (InvoiceLine line : invoice.getInvoiceLines()) {
 			invoiceLines.add(_convertFromDto(line));
 		}
+		
+		long commerceAccountId = invoice.getCommerceAccountId();
 		// call to SB to post 1 invoice
 		PersistedInvoice persistedInvoice = customInvoiceService.addPersistedInvoice(invoice.getGst(),
 				invoice.getCardCode(), invoice.getCardName(), invoice.getCarrier(), invoice.getDocumentDate(),
 				invoice.getDocumentNumber(), invoice.getDocumentStatus(), invoice.getDueDate(),
-				invoice.getFreightAmount(), invoice.getInvoiceTotal(), invoiceLines, _getServiceContext());
+				invoice.getFreightAmount(), invoice.getInvoiceTotal(), commerceAccountId, invoiceLines, _getServiceContext());
 		return _convertToDto(persistedInvoice);
 	}
 

@@ -77,6 +77,10 @@ components:
           description: Invoice total number
           format: double
           type: number
+        commerceAccountId:
+          description: The commerce Account Id 
+          format: int64
+          type: integer
         invoiceLines:
           description: Invoice lines
           items:
