@@ -36,6 +36,7 @@
 		<column name="dueDate" type="Date"></column>
 		<column name="freightAmount" type="double"></column>
 		<column name="invoiceTotal" type="double"></column>
+		<column name="commerceAccountId" type="long"></column>
 		<column name="invoiceLines" type="Collection" entity="PersistedInvoiceLine" mapping-key="persistedInvoiceId" primary="false"></column>
         <order by="asc">
             <order-column name="createDate" order-by="asc"></order-column>
