@@ -84,6 +84,27 @@ public class Invoice implements Cloneable, Serializable {
 
 	protected String carrier;
 
+	public Long getCommerceAccountId() {
+		return commerceAccountId;
+	}
+
+	public void setCommerceAccountId(Long commerceAccountId) {
+		this.commerceAccountId = commerceAccountId;
+	}
+
+	public void setCommerceAccountId(
+		UnsafeSupplier<Long, Exception> commerceAccountIdUnsafeSupplier) {
+
+		try {
+			commerceAccountId = commerceAccountIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long commerceAccountId;
+
 	public Date getDocumentDate() {
 		return documentDate;
 	}

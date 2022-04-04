@@ -739,6 +739,16 @@ public abstract class BaseInvoiceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"commerceAccountId", additionalAssertFieldName)) {
+
+				if (invoice.getCommerceAccountId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("documentDate", additionalAssertFieldName)) {
 				if (invoice.getDocumentDate() == null) {
 					valid = false;
@@ -916,6 +926,19 @@ public abstract class BaseInvoiceResourceTestCase {
 			if (Objects.equals("carrier", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						invoice1.getCarrier(), invoice2.getCarrier())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"commerceAccountId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						invoice1.getCommerceAccountId(),
+						invoice2.getCommerceAccountId())) {
 
 					return false;
 				}
@@ -1136,6 +1159,11 @@ public abstract class BaseInvoiceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("commerceAccountId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("documentDate")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1288,6 +1316,7 @@ public abstract class BaseInvoiceResourceTestCase {
 				cardName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				carrier = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				commerceAccountId = RandomTestUtil.randomLong();
 				documentDate = RandomTestUtil.nextDate();
 				documentNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

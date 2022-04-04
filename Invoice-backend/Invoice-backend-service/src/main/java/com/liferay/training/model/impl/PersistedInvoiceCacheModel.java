@@ -64,7 +64,7 @@ public class PersistedInvoiceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{persistedInvoiceId=");
 		sb.append(persistedInvoiceId);
@@ -100,6 +100,8 @@ public class PersistedInvoiceCacheModel
 		sb.append(freightAmount);
 		sb.append(", invoiceTotal=");
 		sb.append(invoiceTotal);
+		sb.append(", commerceAccountId=");
+		sb.append(commerceAccountId);
 		sb.append("}");
 
 		return sb.toString();
@@ -188,6 +190,7 @@ public class PersistedInvoiceCacheModel
 
 		persistedInvoiceImpl.setFreightAmount(freightAmount);
 		persistedInvoiceImpl.setInvoiceTotal(invoiceTotal);
+		persistedInvoiceImpl.setCommerceAccountId(commerceAccountId);
 
 		persistedInvoiceImpl.resetOriginalValues();
 
@@ -219,6 +222,8 @@ public class PersistedInvoiceCacheModel
 		freightAmount = objectInput.readDouble();
 
 		invoiceTotal = objectInput.readDouble();
+
+		commerceAccountId = objectInput.readLong();
 	}
 
 	@Override
@@ -285,6 +290,8 @@ public class PersistedInvoiceCacheModel
 		objectOutput.writeDouble(freightAmount);
 
 		objectOutput.writeDouble(invoiceTotal);
+
+		objectOutput.writeLong(commerceAccountId);
 	}
 
 	public long persistedInvoiceId;
@@ -304,5 +311,6 @@ public class PersistedInvoiceCacheModel
 	public long dueDate;
 	public double freightAmount;
 	public double invoiceTotal;
+	public long commerceAccountId;
 
 }

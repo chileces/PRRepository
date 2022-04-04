@@ -83,7 +83,7 @@ public class PersistedInvoiceModelImpl
 		{"carrier", Types.VARCHAR}, {"documentDate", Types.TIMESTAMP},
 		{"documentNumber", Types.VARCHAR}, {"documentStatus", Types.VARCHAR},
 		{"dueDate", Types.TIMESTAMP}, {"freightAmount", Types.DOUBLE},
-		{"invoiceTotal", Types.DOUBLE}
+		{"invoiceTotal", Types.DOUBLE}, {"commerceAccountId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,10 +107,11 @@ public class PersistedInvoiceModelImpl
 		TABLE_COLUMNS_MAP.put("dueDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("freightAmount", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("invoiceTotal", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("commerceAccountId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CustomInvoice_PersistedInvoice (persistedInvoiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,gst DOUBLE,cardCode VARCHAR(75) null,cardName VARCHAR(75) null,carrier VARCHAR(75) null,documentDate DATE null,documentNumber VARCHAR(75) null,documentStatus VARCHAR(75) null,dueDate DATE null,freightAmount DOUBLE,invoiceTotal DOUBLE)";
+		"create table CustomInvoice_PersistedInvoice (persistedInvoiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,gst DOUBLE,cardCode VARCHAR(75) null,cardName VARCHAR(75) null,carrier VARCHAR(75) null,documentDate DATE null,documentNumber VARCHAR(75) null,documentStatus VARCHAR(75) null,dueDate DATE null,freightAmount DOUBLE,invoiceTotal DOUBLE,commerceAccountId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CustomInvoice_PersistedInvoice";
@@ -180,6 +181,7 @@ public class PersistedInvoiceModelImpl
 		model.setDueDate(soapModel.getDueDate());
 		model.setFreightAmount(soapModel.getFreightAmount());
 		model.setInvoiceTotal(soapModel.getInvoiceTotal());
+		model.setCommerceAccountId(soapModel.getCommerceAccountId());
 
 		return model;
 	}
@@ -423,6 +425,12 @@ public class PersistedInvoiceModelImpl
 			"invoiceTotal",
 			(BiConsumer<PersistedInvoice, Double>)
 				PersistedInvoice::setInvoiceTotal);
+		attributeGetterFunctions.put(
+			"commerceAccountId", PersistedInvoice::getCommerceAccountId);
+		attributeSetterBiConsumers.put(
+			"commerceAccountId",
+			(BiConsumer<PersistedInvoice, Long>)
+				PersistedInvoice::setCommerceAccountId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -737,6 +745,21 @@ public class PersistedInvoiceModelImpl
 		_invoiceTotal = invoiceTotal;
 	}
 
+	@JSON
+	@Override
+	public long getCommerceAccountId() {
+		return _commerceAccountId;
+	}
+
+	@Override
+	public void setCommerceAccountId(long commerceAccountId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_commerceAccountId = commerceAccountId;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -810,6 +833,7 @@ public class PersistedInvoiceModelImpl
 		persistedInvoiceImpl.setDueDate(getDueDate());
 		persistedInvoiceImpl.setFreightAmount(getFreightAmount());
 		persistedInvoiceImpl.setInvoiceTotal(getInvoiceTotal());
+		persistedInvoiceImpl.setCommerceAccountId(getCommerceAccountId());
 
 		persistedInvoiceImpl.resetOriginalValues();
 
@@ -987,6 +1011,8 @@ public class PersistedInvoiceModelImpl
 
 		persistedInvoiceCacheModel.invoiceTotal = getInvoiceTotal();
 
+		persistedInvoiceCacheModel.commerceAccountId = getCommerceAccountId();
+
 		return persistedInvoiceCacheModel;
 	}
 
@@ -1096,6 +1122,7 @@ public class PersistedInvoiceModelImpl
 	private Date _dueDate;
 	private double _freightAmount;
 	private double _invoiceTotal;
+	private long _commerceAccountId;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PersistedInvoice, Object> function =
@@ -1141,6 +1168,7 @@ public class PersistedInvoiceModelImpl
 		_columnOriginalValues.put("dueDate", _dueDate);
 		_columnOriginalValues.put("freightAmount", _freightAmount);
 		_columnOriginalValues.put("invoiceTotal", _invoiceTotal);
+		_columnOriginalValues.put("commerceAccountId", _commerceAccountId);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1187,6 +1215,8 @@ public class PersistedInvoiceModelImpl
 		columnBitmasks.put("freightAmount", 32768L);
 
 		columnBitmasks.put("invoiceTotal", 65536L);
+
+		columnBitmasks.put("commerceAccountId", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

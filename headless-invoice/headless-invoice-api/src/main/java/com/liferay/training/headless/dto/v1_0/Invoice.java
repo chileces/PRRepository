@@ -144,6 +144,34 @@ public class Invoice implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String carrier;
 
+	@Schema(description = "The commerce Account Id")
+	public Long getCommerceAccountId() {
+		return commerceAccountId;
+	}
+
+	public void setCommerceAccountId(Long commerceAccountId) {
+		this.commerceAccountId = commerceAccountId;
+	}
+
+	@JsonIgnore
+	public void setCommerceAccountId(
+		UnsafeSupplier<Long, Exception> commerceAccountIdUnsafeSupplier) {
+
+		try {
+			commerceAccountId = commerceAccountIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The commerce Account Id")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long commerceAccountId;
+
 	@Schema(description = "Document date")
 	public Date getDocumentDate() {
 		return documentDate;
@@ -467,6 +495,16 @@ public class Invoice implements Serializable {
 			sb.append(_escape(carrier));
 
 			sb.append("\"");
+		}
+
+		if (commerceAccountId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"commerceAccountId\": ");
+
+			sb.append(commerceAccountId);
 		}
 
 		if (documentDate != null) {

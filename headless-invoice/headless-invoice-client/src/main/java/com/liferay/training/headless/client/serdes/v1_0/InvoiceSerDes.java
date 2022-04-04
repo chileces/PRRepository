@@ -89,6 +89,16 @@ public class InvoiceSerDes {
 			sb.append("\"");
 		}
 
+		if (invoice.getCommerceAccountId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"commerceAccountId\": ");
+
+			sb.append(invoice.getCommerceAccountId());
+		}
+
 		if (invoice.getDocumentDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -248,6 +258,15 @@ public class InvoiceSerDes {
 			map.put("carrier", String.valueOf(invoice.getCarrier()));
 		}
 
+		if (invoice.getCommerceAccountId() == null) {
+			map.put("commerceAccountId", null);
+		}
+		else {
+			map.put(
+				"commerceAccountId",
+				String.valueOf(invoice.getCommerceAccountId()));
+		}
+
 		if (invoice.getDocumentDate() == null) {
 			map.put("documentDate", null);
 		}
@@ -351,6 +370,12 @@ public class InvoiceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "carrier")) {
 				if (jsonParserFieldValue != null) {
 					invoice.setCarrier((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "commerceAccountId")) {
+				if (jsonParserFieldValue != null) {
+					invoice.setCommerceAccountId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "documentDate")) {

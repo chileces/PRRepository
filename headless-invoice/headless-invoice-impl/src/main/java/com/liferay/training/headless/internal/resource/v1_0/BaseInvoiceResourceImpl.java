@@ -108,7 +108,7 @@ public abstract class BaseInvoiceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-invoice/v1.0/invoices' -d $'{"cardCode": ___, "cardName": ___, "carrier": ___, "documentDate": ___, "documentNumber": ___, "documentStatus": ___, "dueDate": ___, "freightAmount": ___, "gst": ___, "id": ___, "invoiceLines": ___, "invoiceTotal": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-invoice/v1.0/invoices' -d $'{"cardCode": ___, "cardName": ___, "carrier": ___, "commerceAccountId": ___, "documentDate": ___, "documentNumber": ___, "documentStatus": ___, "dueDate": ___, "freightAmount": ___, "gst": ___, "id": ___, "invoiceLines": ___, "invoiceTotal": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Create a new Invoice record"
@@ -280,7 +280,7 @@ public abstract class BaseInvoiceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-invoice/v1.0/invoices/{invoiceId}' -d $'{"cardCode": ___, "cardName": ___, "carrier": ___, "documentDate": ___, "documentNumber": ___, "documentStatus": ___, "dueDate": ___, "freightAmount": ___, "gst": ___, "id": ___, "invoiceLines": ___, "invoiceTotal": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-invoice/v1.0/invoices/{invoiceId}' -d $'{"cardCode": ___, "cardName": ___, "carrier": ___, "commerceAccountId": ___, "documentDate": ___, "documentNumber": ___, "documentStatus": ___, "dueDate": ___, "freightAmount": ___, "gst": ___, "id": ___, "invoiceLines": ___, "invoiceTotal": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the Invoice with the information sent in the request body. Any missing fields are deleted, unless they are required."
@@ -323,6 +323,11 @@ public abstract class BaseInvoiceResourceImpl
 			existingInvoice.setCarrier(invoice.getCarrier());
 		}
 
+		if (invoice.getCommerceAccountId() != null) {
+			existingInvoice.setCommerceAccountId(
+				invoice.getCommerceAccountId());
+		}
+
 		if (invoice.getDocumentDate() != null) {
 			existingInvoice.setDocumentDate(invoice.getDocumentDate());
 		}
@@ -359,7 +364,7 @@ public abstract class BaseInvoiceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-invoice/v1.0/invoices/{invoiceId}' -d $'{"cardCode": ___, "cardName": ___, "carrier": ___, "documentDate": ___, "documentNumber": ___, "documentStatus": ___, "dueDate": ___, "freightAmount": ___, "gst": ___, "id": ___, "invoiceLines": ___, "invoiceTotal": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-invoice/v1.0/invoices/{invoiceId}' -d $'{"cardCode": ___, "cardName": ___, "carrier": ___, "commerceAccountId": ___, "documentDate": ___, "documentNumber": ___, "documentStatus": ___, "dueDate": ___, "freightAmount": ___, "gst": ___, "id": ___, "invoiceLines": ___, "invoiceTotal": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the Invoice, the information sent in the request body. Any missing fields are deleted, unless they are required."
