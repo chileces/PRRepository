@@ -50,6 +50,7 @@ public class PersistedInvoiceSoap implements Serializable {
 		soapModel.setDueDate(model.getDueDate());
 		soapModel.setFreightAmount(model.getFreightAmount());
 		soapModel.setInvoiceTotal(model.getInvoiceTotal());
+		soapModel.setCommerceAccountId(model.getCommerceAccountId());
 
 		return soapModel;
 	}
@@ -247,6 +248,14 @@ public class PersistedInvoiceSoap implements Serializable {
 		_invoiceTotal = invoiceTotal;
 	}
 
+	public long getCommerceAccountId() {
+		return _commerceAccountId;
+	}
+
+	public void setCommerceAccountId(long commerceAccountId) {
+		_commerceAccountId = commerceAccountId;
+	}
+
 	private long _persistedInvoiceId;
 	private long _groupId;
 	private long _companyId;
@@ -264,5 +273,6 @@ public class PersistedInvoiceSoap implements Serializable {
 	private Date _dueDate;
 	private double _freightAmount;
 	private double _invoiceTotal;
+	private long _commerceAccountId;
 
 }

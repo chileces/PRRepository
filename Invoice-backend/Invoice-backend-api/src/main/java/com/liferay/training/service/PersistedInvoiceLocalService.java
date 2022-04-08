@@ -71,7 +71,7 @@ public interface PersistedInvoiceLocalService
 			Double gst, String cardCode, String cardName, String carrier,
 			Date documentDate, String documentNumber, String documentStatus,
 			Date dueDate, Double freightAmount, Double invoiceTotal,
-			List<PersistedInvoiceLine> invoiceLines,
+			long commerceAccountId, List<PersistedInvoiceLine> invoiceLines,
 			ServiceContext serviceContext)
 		throws PortalException;
 

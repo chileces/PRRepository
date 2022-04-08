@@ -330,4 +330,18 @@ public interface PersistedInvoiceModel
 	 */
 	public void setInvoiceTotal(double invoiceTotal);
 
+	/**
+	 * Returns the commerce account ID of this persisted invoice.
+	 *
+	 * @return the commerce account ID of this persisted invoice
+	 */
+	public long getCommerceAccountId();
+
+	/**
+	 * Sets the commerce account ID of this persisted invoice.
+	 *
+	 * @param commerceAccountId the commerce account ID of this persisted invoice
+	 */
+	public void setCommerceAccountId(long commerceAccountId);
+
 }

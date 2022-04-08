@@ -38,7 +38,7 @@ public class PersistedInvoiceLocalServiceWrapper
 			Double gst, String cardCode, String cardName, String carrier,
 			java.util.Date documentDate, String documentNumber,
 			String documentStatus, java.util.Date dueDate, Double freightAmount,
-			Double invoiceTotal,
+			Double invoiceTotal, long commerceAccountId,
 			java.util.List<com.liferay.training.model.PersistedInvoiceLine>
 				invoiceLines,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -46,8 +46,8 @@ public class PersistedInvoiceLocalServiceWrapper
 
 		return _persistedInvoiceLocalService.addPersistedInvoice(
 			gst, cardCode, cardName, carrier, documentDate, documentNumber,
-			documentStatus, dueDate, freightAmount, invoiceTotal, invoiceLines,
-			serviceContext);
+			documentStatus, dueDate, freightAmount, invoiceTotal,
+			commerceAccountId, invoiceLines, serviceContext);
 	}
 
 	/**

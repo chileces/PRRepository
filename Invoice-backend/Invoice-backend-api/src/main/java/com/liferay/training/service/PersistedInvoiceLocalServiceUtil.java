@@ -47,15 +47,15 @@ public class PersistedInvoiceLocalServiceUtil {
 			Double gst, String cardCode, String cardName, String carrier,
 			java.util.Date documentDate, String documentNumber,
 			String documentStatus, java.util.Date dueDate, Double freightAmount,
-			Double invoiceTotal,
+			Double invoiceTotal, long commerceAccountId,
 			List<com.liferay.training.model.PersistedInvoiceLine> invoiceLines,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addPersistedInvoice(
 			gst, cardCode, cardName, carrier, documentDate, documentNumber,
-			documentStatus, dueDate, freightAmount, invoiceTotal, invoiceLines,
-			serviceContext);
+			documentStatus, dueDate, freightAmount, invoiceTotal,
+			commerceAccountId, invoiceLines, serviceContext);
 	}
 
 	/**

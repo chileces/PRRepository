@@ -17,6 +17,8 @@ package com.liferay.training.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.BaseService;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.training.model.PersistedInvoice;
 import com.liferay.training.model.PersistedInvoiceLine;
 
@@ -60,7 +64,7 @@ public interface PersistedInvoiceService extends BaseService {
 			Double gst, String cardCode, String cardName, String carrier,
 			Date documentDate, String documentNumber, String documentStatus,
 			Date dueDate, Double freightAmount, Double invoiceTotal,
-			List<PersistedInvoiceLine> invoiceLines,
+			long commerceAccountId, List<PersistedInvoiceLine> invoiceLines,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -71,6 +75,12 @@ public interface PersistedInvoiceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PersistedInvoice> getInvoices(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Page<PersistedInvoice> getInvoicesByKeywords(
+			long companyId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PersistedInvoice> getInvoicesByKeywords(

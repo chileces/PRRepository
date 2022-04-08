@@ -38,7 +38,7 @@ public class PersistedInvoiceServiceWrapper
 			Double gst, String cardCode, String cardName, String carrier,
 			java.util.Date documentDate, String documentNumber,
 			String documentStatus, java.util.Date dueDate, Double freightAmount,
-			Double invoiceTotal,
+			Double invoiceTotal, long commerceAccountId,
 			java.util.List<com.liferay.training.model.PersistedInvoiceLine>
 				invoiceLines,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -46,8 +46,8 @@ public class PersistedInvoiceServiceWrapper
 
 		return _persistedInvoiceService.addPersistedInvoice(
 			gst, cardCode, cardName, carrier, documentDate, documentNumber,
-			documentStatus, dueDate, freightAmount, invoiceTotal, invoiceLines,
-			serviceContext);
+			documentStatus, dueDate, freightAmount, invoiceTotal,
+			commerceAccountId, invoiceLines, serviceContext);
 	}
 
 	@Override
@@ -70,6 +70,19 @@ public class PersistedInvoiceServiceWrapper
 		getInvoices(int start, int end) {
 
 		return _persistedInvoiceService.getInvoices(start, end);
+	}
+
+	@Override
+	public com.liferay.portal.vulcan.pagination.Page
+		<com.liferay.training.model.PersistedInvoice> getInvoicesByKeywords(
+				long companyId, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				com.liferay.portal.vulcan.pagination.Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+			throws Exception {
+
+		return _persistedInvoiceService.getInvoicesByKeywords(
+			companyId, search, filter, pagination, sorts);
 	}
 
 	@Override

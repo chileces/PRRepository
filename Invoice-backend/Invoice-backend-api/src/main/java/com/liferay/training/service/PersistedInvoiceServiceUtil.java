@@ -43,15 +43,15 @@ public class PersistedInvoiceServiceUtil {
 			Double gst, String cardCode, String cardName, String carrier,
 			java.util.Date documentDate, String documentNumber,
 			String documentStatus, java.util.Date dueDate, Double freightAmount,
-			Double invoiceTotal,
+			Double invoiceTotal, long commerceAccountId,
 			List<com.liferay.training.model.PersistedInvoiceLine> invoiceLines,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addPersistedInvoice(
 			gst, cardCode, cardName, carrier, documentDate, documentNumber,
-			documentStatus, dueDate, freightAmount, invoiceTotal, invoiceLines,
-			serviceContext);
+			documentStatus, dueDate, freightAmount, invoiceTotal,
+			commerceAccountId, invoiceLines, serviceContext);
 	}
 
 	public static int countAll() {
@@ -68,6 +68,18 @@ public class PersistedInvoiceServiceUtil {
 
 	public static List<PersistedInvoice> getInvoices(int start, int end) {
 		return getService().getInvoices(start, end);
+	}
+
+	public static com.liferay.portal.vulcan.pagination.Page<PersistedInvoice>
+			getInvoicesByKeywords(
+				long companyId, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				com.liferay.portal.vulcan.pagination.Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception {
+
+		return getService().getInvoicesByKeywords(
+			companyId, search, filter, pagination, sorts);
 	}
 
 	public static List<PersistedInvoice> getInvoicesByKeywords(

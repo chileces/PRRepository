@@ -59,6 +59,7 @@ public class PersistedInvoiceWrapper
 		attributes.put("dueDate", getDueDate());
 		attributes.put("freightAmount", getFreightAmount());
 		attributes.put("invoiceTotal", getInvoiceTotal());
+		attributes.put("commerceAccountId", getCommerceAccountId());
 
 		return attributes;
 	}
@@ -166,6 +167,12 @@ public class PersistedInvoiceWrapper
 		if (invoiceTotal != null) {
 			setInvoiceTotal(invoiceTotal);
 		}
+
+		Long commerceAccountId = (Long)attributes.get("commerceAccountId");
+
+		if (commerceAccountId != null) {
+			setCommerceAccountId(commerceAccountId);
+		}
 	}
 
 	/**
@@ -196,6 +203,16 @@ public class PersistedInvoiceWrapper
 	@Override
 	public String getCarrier() {
 		return model.getCarrier();
+	}
+
+	/**
+	 * Returns the commerce account ID of this persisted invoice.
+	 *
+	 * @return the commerce account ID of this persisted invoice
+	 */
+	@Override
+	public long getCommerceAccountId() {
+		return model.getCommerceAccountId();
 	}
 
 	/**
@@ -391,6 +408,16 @@ public class PersistedInvoiceWrapper
 	@Override
 	public void setCarrier(String carrier) {
 		model.setCarrier(carrier);
+	}
+
+	/**
+	 * Sets the commerce account ID of this persisted invoice.
+	 *
+	 * @param commerceAccountId the commerce account ID of this persisted invoice
+	 */
+	@Override
+	public void setCommerceAccountId(long commerceAccountId) {
+		model.setCommerceAccountId(commerceAccountId);
 	}
 
 	/**
